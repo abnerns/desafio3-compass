@@ -6,7 +6,7 @@ const SearchBox = (props: SearchBoxProps) => {
     <div className={styles.container}>
         <label className={styles.label}>{props.label}</label>
         <div className={styles.field}>
-            <span className={styles.icon}>{props.icon}</span>
+            <div className={styles.icon}>{props.icon}</div>
             {props.placeholder}
         </div>
     </div>
