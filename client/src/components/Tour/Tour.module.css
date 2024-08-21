@@ -1,0 +1,109 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    height: 55vh;   
+    width: 17vw;
+    font-family: "Work Sans", sans-serif;
+    background-color: rgb(243, 242, 242);
+    justify-content: center;
+    position: absolute;
+}
+
+.container p{
+    font-size: 14px;
+    opacity: 0.7;
+    margin: 0;
+}
+
+.container h3{
+    margin: 0;
+}
+
+.img{
+    height: 27vh;
+    width: 17vw;
+}
+
+.infoBox{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    padding-top: 0.5rem !important;
+}
+
+.review{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.star{
+    color: white;
+    font-size: 13px;
+    padding: 0.2rem;
+    background-color: rgb(231, 75, 75);
+    height: 2.5vh;
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.star:hover{
+    background-color: rgb(189, 59, 59);
+}
+
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.2rem;
+}
+
+.bottom p{
+    margin: 0;
+}
+
+.tour1{
+    width: 14vw;
+}
+
+.startPrice{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+}
+
+.price{
+    font-family: "Kaushan Script", cursive;
+    opacity: 1 !important;
+    font-size: 20px !important;
+    font-weight: bold;
+}
+
+.hr{
+    height: 1px;
+    background: black;
+    opacity: 0.2;
+}
+
+.icon{
+    height: 4vh;
+    width: 2vw;
+    background-color: rgb(243, 242, 242);
+    border-radius: 50%;
+    position: absolute;
+    top: 2.5%;
+    left: 82%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon:hover{
+    cursor: pointer;
+    background-color: rgb(209, 209, 209);
+}

@@ -9,22 +9,22 @@ const SearchBar = () => {
     <div className={styles.container}>
         <SearchBox 
         label="Destination"
-        icon={<Send />}
+        icon={<Send size={18} />}
         placeholder="Where to go?"
       />
       <SearchBox 
         label="Type"
-        icon={<Flag />}
+        icon={<Flag size={18} />}
         placeholder="Activity"
       />
       <SearchBox 
         label="When"
-        icon={<Calendar />}
+        icon={<Calendar size={18} />}
         placeholder="Date"
       />
       <SearchBox 
         label="Guests"
-        icon={<Users />}
+        icon={<Users size={18} />}
         placeholder="0"
       />
       <NavButton

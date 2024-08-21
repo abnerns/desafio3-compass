@@ -1,7 +1,7 @@
 .button{
     background-color: rgb(231, 75, 75);
     width: 8vw;
-    min-height: 6.25vh;
+    height: 6.25vh;
     display: flex;
     align-items: center;
     justify-content: center;
