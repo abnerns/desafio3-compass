@@ -6,9 +6,16 @@ const SearchBox = (props: SearchBoxProps) => {
     <div className={styles.container}>
         <label className={styles.label}>{props.label}</label>
         <div className={styles.field}>
-            <div className={styles.icon}>{props.icon}</div>
-            {props.placeholder}
+          <div className={styles.icon}>{props.icon}</div>
+          <input
+            type={props.type}
+            id={props.id}
+            placeholder={props.placeholder}
+            className={styles.input}
+          />     
         </div>
+        
+            
     </div>
   )
 }
