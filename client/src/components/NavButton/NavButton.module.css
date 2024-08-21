@@ -1,0 +1,16 @@
+.button{
+    background-color: rgb(231, 75, 75);
+    width: 7vw;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 5px;
+    font-family: "Work Sans", sans-serif;
+}
+
+.button:hover{
+    cursor: pointer;
+    background-color: rgb(189, 59, 59);
+}

@@ -1,4 +1,5 @@
 import './App.css'
+import NavButton from './components/NavButton/NavButton'
 import SearchBox from './components/SearchBox/SearchBox'
 import { Send } from 'lucide-react'
 
@@ -10,6 +11,9 @@ function App() {
         label="Destination"
         icon={<Send />}
         placeholder="Where to go?"
+      />
+      <NavButton
+        value="Search"
       />
     </>
   )
