@@ -1,10 +1,16 @@
 import './App.css'
+import SearchBox from './components/SearchBox/SearchBox'
+import { Send } from 'lucide-react'
 
 function App() {
 
   return (
     <>
-      <h1>Hello world!</h1>
+      <SearchBox 
+        label="Destination"
+        icon={<Send />}
+        placeholder="Where to go?"
+      />
     </>
   )
 }
