@@ -38,7 +38,7 @@ function Home() {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
               src={userDetails.photo}
-              width={"40%"}
+              width={"10%"}
               style={{ borderRadius: "50%" }}
             />
           </div>

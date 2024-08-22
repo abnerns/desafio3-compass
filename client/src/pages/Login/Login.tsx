@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../../firebase/firebase";
 import { toast } from "react-toastify";
+import GoogleLogin from "../../components/GoogleLogin/GoogleLogin";
 
 function Login() {
   const [email, setEmail] = useState<string>("");
@@ -63,6 +64,7 @@ function Login() {
       <p className="forgot-password text-right">
         New user <a href="/register">Register Here</a>
       </p>
+      <GoogleLogin />
     </form>
   );
 }
