@@ -1,0 +1,126 @@
+.footer{
+    background-color: black;
+    width: 100%;
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.footer p{
+    margin: 0;
+    opacity: 0.6;
+}
+
+.box1{
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+    padding: 5rem;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo p{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 24px;
+    opacity: 1 !important;
+}
+
+.social{
+    display: flex;
+    gap: 1rem;
+}
+
+.social a{
+    color: white;
+}
+
+.call{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.call p{
+    opacity: 1 !important;
+}
+
+.line{
+    width: 1px;
+    background: white;
+    opacity: 0.2;
+    display: flex;
+    height: 30vh;
+}
+
+.cursive{
+    font-family: "Kaushan Script", cursive;
+    font-size: 14px;
+    opacity: 1 !important;
+}
+
+.box2{
+    display: flex;
+    flex-flow: wrap;
+    gap: 3rem;
+    align-items: flex-end;
+    align-content: center;
+    padding: 5rem;
+}
+
+.box2 p{
+    cursor: pointer;
+}
+
+.box3{
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 6rem;
+    padding: 5rem;
+}
+
+.inputField {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+    width: 15vw;
+    height: 4vh;
+    padding-top: 0.9rem;
+    padding-bottom: 0.4rem;
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .error {
+    border: 2px solid red;
+  }
+  
+  .inputWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  
+  button {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  
+  input {
+    border: none;
+    outline: none;
+  }
+  
