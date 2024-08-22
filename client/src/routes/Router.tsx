@@ -2,45 +2,34 @@ import { Route, Routes } from "react-router-dom"
 import Login from "../pages/Login/Login"
 import Home from "../pages/Home/Home"
 import TourPackage from "../pages/TourPackage/TourPackage"
-import { onAuthStateChanged } from "firebase/auth"
+import Register from "../pages/Register/Register"
+import { ToastContainer } from "react-toastify"
 import { useEffect, useState } from "react"
-import ProtectedRoute from "./ProtectedRoute"
 import { auth } from "../firebase/firebase"
+import { User } from "firebase/auth";
 
 function Router () {
-    const [user, setUser] = useState(null);
-    const [isFetching, setIsFetching] = useState(true);
+    const [user, setUser] = useState<User|null>(null);
     
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user);
-                setIsFetching(false);
-                return;
-            }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
 
-            setUser(null);
-            setIsFetching(false);
-        })
-        return () => unsubscribe();
-    }, [])
+    return () => unsubscribe();
+}, []);
 
-    if (isFetching) {
-        return <h2>Loading...</h2>
-    }
-  return (
+    return(
     <div>
         <Routes>
+            <Route path="/" element={user ? <Home /> : <Login />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home user={user} />} />
-            <Route path="/tours" element={
-                <ProtectedRoute user={user}>
-                    <TourPackage />
-                </ProtectedRoute>
-            } />
+            <Route path="/register" element={<Register />} />
+            <Route path="/tours" element={<TourPackage />} />
         </Routes>
+        <ToastContainer />
     </div>
-  )
+    )
 }
 
 export default Router

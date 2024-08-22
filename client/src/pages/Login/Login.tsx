@@ -1,79 +1,70 @@
-import { useState } from "react"
-import { auth } from "../../firebase/firebase"
-import { 
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
- } from "firebase/auth"
-import { Navigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { auth } from "../../firebase/firebase";
+import { toast } from "react-toastify";
 
-const Login = ({user}) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isSignUpActive, setIsSignUpActive] = useState(false)
-  
-  const handleMethodChange = () => {
-    setIsSignUpActive(!isSignUpActive)
-  }
+function Login() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const handleSignUp = () => {
-    if(!email || !password) return;
-    createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    const user = userCredential.user;
-    console.log(user);
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
-  });
-  }
-
-  const handleSignIn = () => {
-    if(!email || !password) return;
-    signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    const user = userCredential.user;
-    console.log(user);
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
-  });
-  }
-
-  const handleEmailChange = (event) => setEmail(event.target.value);
-  const handlePasswordChange = (event) => setPassword(event.target.value);
-
-  if(user){
-    return <Navigate to='/'></Navigate>
-  }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      window.location.href = "/";
+      toast.success("User logged in Successfully", {
+        position: "top-center",
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+        toast.error(error.message, {
+          position: "bottom-center",
+        });
+      } else {
+        toast.error("An unexpected error occurred", {
+          position: "bottom-center",
+        });
+      }
+    }
+  };
 
   return (
-    <div>
-      <form>
-        {isSignUpActive && <legend>Sign Up</legend>}
-        {!isSignUpActive && <legend>Sign In</legend>}
-        <fieldset>
-          <ul>
-            <li>
-              <label htmlFor="email">Email</label>
-              <input type="text" id="email" onChange={handleEmailChange} />
-            </li>
-            <li>
-              <label htmlFor="password">Password</label>
-              <input type="password" id="password" onChange={handlePasswordChange} />
-            </li>
-          </ul>
-          {isSignUpActive && <button type="button" onClick={handleSignUp}>Sign Up</button>}
-          {!isSignUpActive && <button type="button" onClick={handleSignIn}>Sign In</button>}
-        </fieldset>
-        {isSignUpActive && <a onClick={handleMethodChange}>Login</a>}
-        {!isSignUpActive && <a onClick={handleMethodChange}>Create an account</a>}
-      </form>
-    </div>
-  )
+    <form onSubmit={handleSubmit}>
+      <h3>Login</h3>
+
+      <div className="mb-3">
+        <label>Email address</label>
+        <input
+          type="email"
+          className="form-control"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-3">
+        <label>Password</label>
+        <input
+          type="password"
+          className="form-control"
+          placeholder="Enter password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+
+      <div className="d-grid">
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </div>
+      <p className="forgot-password text-right">
+        New user <a href="/register">Register Here</a>
+      </p>
+    </form>
+  );
 }
 
-export default Login
+export default Login;
