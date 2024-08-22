@@ -1,10 +1,12 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, User } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../../firebase/firebase";
 import { toast } from "react-toastify";
 import GoogleLogin from "../../components/GoogleLogin/GoogleLogin";
+import { Navigate } from "react-router-dom";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
 
-function Login() {
+function Login({ user }: { user: User | null }) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -29,6 +31,10 @@ function Login() {
       }
     }
   };
+
+  if(user){
+    return <Navigate to ="/"></Navigate>
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -65,6 +71,7 @@ function Login() {
         New user <a href="/register">Register Here</a>
       </p>
       <GoogleLogin />
+      <FacebookLogin />
     </form>
   );
 }

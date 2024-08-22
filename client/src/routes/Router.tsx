@@ -7,25 +7,42 @@ import { ToastContainer } from "react-toastify"
 import { useEffect, useState } from "react"
 import { auth } from "../firebase/firebase"
 import { User } from "firebase/auth";
+import { ProtectedRoute } from "./ProtectedRoute"
 
 function Router () {
     const [user, setUser] = useState<User|null>(null);
+    const [fetch, setFetch] = useState(true);
     
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
+        if(user){
+            setUser(user);
+            setFetch(false);
+            return;
+        }
+
+        setUser(null);
+        setFetch(false);
     });
 
     return () => unsubscribe();
 }, []);
 
+    if(fetch){
+        return <h2>Loading...</h2>;
+    }
+
     return(
     <div>
         <Routes>
-            <Route path="/" element={user ? <Home /> : <Login />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={user ? <Home /> : <Login user={user} />} />
+            <Route path="/login" element={<Login user={user} />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/tours" element={<TourPackage />} />
+            <Route path="/tours" element={
+                <ProtectedRoute user={user}>
+                    <TourPackage />
+                </ProtectedRoute>
+            } />
         </Routes>
         <ToastContainer />
     </div>

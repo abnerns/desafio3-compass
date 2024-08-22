@@ -1,23 +1,30 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { auth, db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { UserInfo } from "../../types/User";
 
 function Home() {
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState<UserInfo | null>(null);
+
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
-      console.log(user);
+      if (user) {
+        console.log(user);
 
-      const docRef = doc(db, "Users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setUserDetails(docSnap.data());
-        console.log(docSnap.data());
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setUserDetails(docSnap.data() as UserInfo);
+          console.log(docSnap.data());
+        } else {
+          console.log("Documento de usuário não encontrado");
+        }
       } else {
         console.log("User is not logged in");
       }
     });
   };
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -28,9 +35,14 @@ function Home() {
       window.location.href = "/login";
       console.log("User logged out successfully!");
     } catch (error) {
-      console.error("Error logging out:", error.message);
+      if (error instanceof Error) {
+        console.error("Error logging out:", error.message);
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   }
+
   return (
     <div>
       {userDetails ? (
@@ -58,4 +70,5 @@ function Home() {
     </div>
   );
 }
+
 export default Home;
