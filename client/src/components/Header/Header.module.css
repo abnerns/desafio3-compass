@@ -1,0 +1,102 @@
+.userNav{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-content: center;
+    flex-wrap: wrap;
+    margin-right: 1.5rem;
+    gap: 1.5rem;
+    width: 60vw;
+}
+
+.button{
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+
+.logo{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.navLink {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 3px;
+}
+
+.navLink::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: #EB565A;
+    transition: width 0.5s ease;
+}
+
+.navLink:hover::after {
+    width: 100%;
+}
+
+.userOff{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.userOff button:hover{
+    background-color: lightgrey;
+    border-radius: 10px;
+    transition: 0.3s;
+    padding: 0.5rem;
+}
+
+.userOn{
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.userOn button:hover{
+    background-color: lightgrey;
+    border-radius: 10px;
+    transition: 0.3s;
+    padding: 0.5rem;
+}
+
+.userOn p{
+    margin: 0;
+}
+
+.form{
+    text-decoration: none;
+    outline: none;
+}
+
+.upperLine{
+    background-color: lightgray;
+    font-size: 13px;
+    padding: 0.5rem;
+    font-family: 'Work Sans', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    opacity: 0.7;
+}
+
+.social{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.upperLine p {
+    margin: 0;
+}

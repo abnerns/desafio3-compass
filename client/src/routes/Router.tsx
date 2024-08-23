@@ -35,7 +35,7 @@ function Router () {
     return(
     <div>
         <Routes>
-            <Route path="/" element={user ? <Home /> : <Login user={user} />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login user={user} />} />
             <Route path="/register" element={<Register />} />
             <Route path="/tours" element={
