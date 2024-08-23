@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { auth, db } from "../../firebase/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
-import { Card, Container } from "react-bootstrap";
+import styles from "./Register.module.css"
 
 function Register() {
   const [email, setEmail] = useState<string>("");
@@ -42,10 +42,10 @@ function Register() {
   };
 
   return (
-    <Container>
-      <Card>
-        <form onSubmit={handleRegister}>
-          <h3>Sign Up</h3>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <form onSubmit={handleRegister} className={styles.form}>
+          <div style={{ display: 'flex', justifyContent: 'center', fontSize: '26px', fontFamily: 'Work Sans', fontWeight: 'bold' }}>Sign Up</div>
           <div className="mb-3">
             <label>First name</label>
             <input
@@ -90,16 +90,16 @@ function Register() {
           </div>
 
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-danger" style={{marginTop: '1rem' }}>
               Sign Up
             </button>
           </div>
-          <p className="forgot-password text-right">
-            Already registered <a href="/login">Login</a>
+          <p style={{display: 'flex', justifyContent:'center', marginTop: '1rem', gap: '0.5rem', fontWeight: 'bold' }}>
+            Already registered? <a href="/login">Login</a>
           </p>
         </form>
-      </Card>
-    </Container>
+      </div>
+    </div>
   );
 }
 

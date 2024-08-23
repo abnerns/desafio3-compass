@@ -17,15 +17,7 @@
     background-color: white;
 }
 
-.register{
-      display: flex;
-      flex-flow: column;
-      align-items: center;
-      margin-top: 1rem;
-}
-
-.altLogin {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
+.form{
+    display: flex;
+    flex-flow: column;
 }

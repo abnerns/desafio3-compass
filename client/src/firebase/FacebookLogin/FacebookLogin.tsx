@@ -38,8 +38,8 @@ const FacebookLogin = () => {
     }
 
     return (
-        <div onClick={facebookLogin}>
-            <FaFacebook />
+        <div style={{cursor: 'pointer'}} onClick={facebookLogin}>
+            <FaFacebook size={30} />
         </div>
     );
 }

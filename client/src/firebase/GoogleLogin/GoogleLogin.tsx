@@ -26,9 +26,8 @@ function GoogleLogin() {
   }
   return (
     <div>
-      <p className="continue-p">--Or continue with--</p>
-      <div style={{}} onClick={googleLogin}>
-        <FcGoogle />
+      <div style={{cursor: 'pointer'}} onClick={googleLogin}>
+        <FcGoogle size={30} />
       </div>
     </div>
   );

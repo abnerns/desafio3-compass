@@ -29,7 +29,7 @@ function Router () {
 }, []);
 
     if(fetch){
-        return <h2>Loading...</h2>;
+        return;
     }
 
     return(

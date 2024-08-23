@@ -65,7 +65,7 @@ function Home() {
           </button>
         </>
       ) : (
-        <p>Loading...</p>
+        <p></p>
       )}
     </div>
   );
