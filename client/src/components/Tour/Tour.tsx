@@ -16,7 +16,7 @@ const Tour = ({ tour }) => {
         <button className={styles.icon} onClick={handleLike}>
           <Heart size={12} color={like ? "red" : "black"} fill={like ? "red" : "none"} />
         </button>
-        <img className={styles.img} alt={tour.name} />
+        <img className={styles.img} alt={tour.name} src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" />
       </div>
       <div className={styles.infoBox}>
         <p>

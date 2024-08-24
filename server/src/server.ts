@@ -1,11 +1,12 @@
 import http from 'http';
-const sqlite3 = require("sqlite3").verbose();
+import sqlite3 from 'sqlite3';
+import { Tour } from './types';
 
-const db = new  sqlite3.Database("app.db", (err)=>{
-    if(err){
-        console.error(err);
-    }else{
-        console.log("Conexão estabelecida com sucesso.")
+const db = new sqlite3.Database("app.db", (err: Error | null) => {
+    if (err) {
+        console.error(err.message);
+    } else {
+        console.log("Conexão estabelecida com sucesso.");
     }
 });
 
@@ -16,25 +17,25 @@ db.run(
     city TEXT,
     country TEXT,
     date_start TEXT,
-    date_end TEXT,
+    date_end TEXT,s
     avgReview REAL,
-    duration INTEGER,
+    duration TEXT,
     price REAL
   )`,
-  (err) => {
+  (err: Error | null) => {
     if (err) {
-      console.error(err);
+      console.error(err.message);
     } else {
       console.log("Tabela criada com sucesso.");
     }
   }
 );
 
-const search = (callback)=>{
-    db.all("SELECT * FROM tours", (err, rows)=>{
-        if(err){
-            console.error(err);
-        }else{
+const search = (callback: (rows: Tour[]) => void): void => {
+    db.all("SELECT * FROM tours", (err: Error | null, rows: Tour[]) => {
+        if (err) {
+            console.error(err.message);
+        } else {
             callback(rows);
         }
     });
@@ -43,28 +44,23 @@ const search = (callback)=>{
 const insertData = db.prepare(
   `INSERT INTO tours (name, city, country, date_start, date_end, avgReview, duration, price)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-  (err) => {
+  (err: Error | null) => {
     if (err) {
-      console.error(err);
-    } else {
-      console.log("Dados inseridos com sucesso.");
+      console.error(err.message);
     }
   }
 );
 
-
 const deleteData = db.prepare(
-    `DELETE FROM tours WHERE id == ?`,
-    (err)=>{
-        if(err){
-            console.error(err);
-        }else{
-            console.log("Dados excluídos com sucesso.");
-        }
+  `DELETE FROM tours WHERE id = ?`,
+  (err: Error | null) => {
+    if (err) {
+      console.error(err.message);
     }
+  }
 );
 
-const modifyData = db.prepare(
+const updateData = db.prepare(
   `UPDATE tours
     SET name = ?,
         city = ?,
@@ -75,35 +71,31 @@ const modifyData = db.prepare(
         duration = ?,
         price = ?
    WHERE id = ?`,
-  (err) => {
+  (err: Error | null) => {
     if (err) {
-      console.error(err);
-    } else {
-      console.log("Dados modificados com sucesso.");
-    }
+      console.error(err.message);
+    } 
   }
 );
 
-
-const server = http.createServer((req, res)=>{
-
+const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-    search((result)=>{
-        res.write(JSON.stringify(result));
-        res.end();
-    });
-
-    
-    if(req.method === "POST"){
+    if (req.method === "GET") {
+        search((result) => {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.write(JSON.stringify(result));
+            res.end();
+        });
+    } else if (req.method === "POST") {
         let body = "";
-        req.on("data", (chunk)=>{
+        req.on("data", (chunk) => {
             body += chunk;
         });
-        req.on("end", ()=>{
-            const parsedBody = JSON.parse(body);
+        req.on("end", () => {
+            const parsedBody: Tour = JSON.parse(body);
             console.log(parsedBody);
             insertData.run(
                 parsedBody.name,
@@ -115,32 +107,31 @@ const server = http.createServer((req, res)=>{
                 parsedBody.duration,
                 parsedBody.price
             );
-            console.log("Dados criados com sucesso.");
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end("Dados criados com sucesso.");
         });
-
-        
-    }else if(req.method === "DELETE"){
+    } else if (req.method === "DELETE") {
         let body = "";
-        req.on("data", (chunk)=>{
+        req.on("data", (chunk) => {
             body += chunk;
         });
-        req.on("end", ()=>{
-            const parsedBody = JSON.parse(body);
+        req.on("end", () => {
+            const parsedBody: { id: number } = JSON.parse(body);
             console.log(parsedBody);
             deleteData.run(parsedBody.id);
-            console.log("Dados excluídos com sucesso.");
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end("Dados excluídos com sucesso.");
         });
-
-    }else if(req.method === "PUT"){
+    } else if (req.method === "PUT") {
         let body = "";
-        req.on("data", (chunk)=>{
+        req.on("data", (chunk) => {
             body += chunk;
         });
-        req.on("end", ()=>{
-            const parsedBody = JSON.parse(body);
+        req.on("end", () => {
+            const parsedBody: Tour & { id: number } = JSON.parse(body);
             console.log(parsedBody);
 
-            modifyData.run(
+            updateData.run(
               parsedBody.name,
               parsedBody.city,
               parsedBody.country,
@@ -148,13 +139,16 @@ const server = http.createServer((req, res)=>{
               parsedBody.date_end,
               parsedBody.avgReview,
               parsedBody.duration,
-              parsedBody.price
+              parsedBody.price,
+              parsedBody.id
             );
-            console.log("Dados modificados com sucesso.");
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end("Dados modificados com sucesso.");
         });
     }
-
 });
+
 const PORT = 8000;
-server.listen(PORT);
-console.log(`Servidor escutando no porto ${PORT}`)
+server.listen(PORT, () => {
+    console.log(`Servidor escutando no porto ${PORT}`);
+});
