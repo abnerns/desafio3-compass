@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { auth } from "../firebase/firebase"
 import { User } from "firebase/auth";
 import { ProtectedRoute } from "./ProtectedRoute"
+import TourDetails from "../pages/TourDetails/TourDetails"
 
 function Router () {
     const [user, setUser] = useState<User|null>(null);
@@ -41,6 +42,11 @@ function Router () {
             <Route path="/tours" element={
                 <ProtectedRoute user={user}>
                     <TourPackage />
+                </ProtectedRoute>
+            } />
+            <Route path="/tours-info" element={
+                <ProtectedRoute user={user}>
+                    <TourDetails />
                 </ProtectedRoute>
             } />
         </Routes>
