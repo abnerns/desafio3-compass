@@ -2,8 +2,9 @@ import { Star } from "lucide-react";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import styles from "./Tour.module.css";
+import { TourProps } from "./types";
 
-const Tour = ({ tour }) => {
+const Tour: React.FC<TourProps> = ({ tour }) => {
   const [like, setLike] = useState(false);
 
   const handleLike = () => {

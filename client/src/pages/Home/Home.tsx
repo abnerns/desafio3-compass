@@ -1,11 +1,12 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Tour from "../../components/Tour/Tour";
+import { TourTypes } from "../../components/Tour/types";
 import styles from "./Home.module.css";
 import { useState, useEffect } from "react";
 
 function Home() {
-  const [tours, setTours] = useState([]);
+  const [tours, setTours] = useState<TourTypes[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:8000")

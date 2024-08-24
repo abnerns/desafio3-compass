@@ -1,6 +1,6 @@
 import http from 'http';
 import sqlite3 from 'sqlite3';
-import { Tour } from './types';
+import { Review, Tour } from './types';
 
 const db = new sqlite3.Database("app.db", (err: Error | null) => {
     if (err) {
@@ -11,16 +11,56 @@ const db = new sqlite3.Database("app.db", (err: Error | null) => {
 });
 
 db.run(
+  `CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT
+  )`,
+  (err: Error | null) => {
+    if (err) {
+      console.error(err.message);
+    } else {
+      console.log("Tabela criada com sucesso.");
+    }
+  }
+);
+
+db.run(
   `CREATE TABLE IF NOT EXISTS tours (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     city TEXT,
     country TEXT,
     date_start TEXT,
-    date_end TEXT,s
-    avgReview REAL,
+    date_end TEXT,
+    avgReview INTEGER,
     duration TEXT,
-    price REAL
+    price INTEGER,
+    idCateg INTEGER,
+    FOREIGN KEY (idCateg) REFERENCES categories(id)
+  )`,
+  (err: Error | null) => {
+    if (err) {
+      console.error(err.message);
+    } else {
+      console.log("Tabela criada com sucesso.");
+    }
+  }
+);
+
+db.run(
+  `CREATE TABLE IF NOT EXISTS reviews (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    idTour INTEGER,
+    user_name TEXT,
+    user_email TEXT,
+    message TEXT,
+    services INTEGER,
+    price INTEGER,
+    location INTEGER,
+    food INTEGER,  
+    amenities INTEGER,
+    comfort INTEGER,
+    FOREIGN KEY (idTour) REFERENCES tours(id)
   )`,
   (err: Error | null) => {
     if (err) {
@@ -42,8 +82,8 @@ const search = (callback: (rows: Tour[]) => void): void => {
 };
 
 const insertData = db.prepare(
-  `INSERT INTO tours (name, city, country, date_start, date_end, avgReview, duration, price)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+  `INSERT INTO reviews (user_name, user_email, message, services, price, location, food, amenities, comfort)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   (err: Error | null) => {
     if (err) {
       console.error(err.message);
@@ -52,7 +92,7 @@ const insertData = db.prepare(
 );
 
 const deleteData = db.prepare(
-  `DELETE FROM tours WHERE id = ?`,
+  `DELETE FROM reviews WHERE id = ?`,
   (err: Error | null) => {
     if (err) {
       console.error(err.message);
@@ -61,15 +101,16 @@ const deleteData = db.prepare(
 );
 
 const updateData = db.prepare(
-  `UPDATE tours
-    SET name = ?,
-        city = ?,
-        country = ?,
-        date_start = ?,
-        date_end = ?,
-        avgReview = ?,
-        duration = ?,
-        price = ?
+  `UPDATE reviews
+    SET user_name = ?,
+        user_email = ?,
+        message = ?,
+        services = ?,
+        price = ?,
+        location = ?,
+        food = ?,
+        amenities = ?,
+        comfort = ?
    WHERE id = ?`,
   (err: Error | null) => {
     if (err) {
@@ -95,17 +136,18 @@ const server = http.createServer((req, res) => {
             body += chunk;
         });
         req.on("end", () => {
-            const parsedBody: Tour = JSON.parse(body);
+            const parsedBody: Review = JSON.parse(body);
             console.log(parsedBody);
             insertData.run(
-                parsedBody.name,
-                parsedBody.city,
-                parsedBody.country,
-                parsedBody.date_start,
-                parsedBody.date_end,
-                parsedBody.avgReview,
-                parsedBody.duration,
-                parsedBody.price
+                parsedBody.user_name,
+                parsedBody.user_email,
+                parsedBody.message,
+                parsedBody.services,
+                parsedBody.price,
+                parsedBody.location,
+                parsedBody.food,
+                parsedBody.amenities,
+                parsedBody.comfort
             );
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end("Dados criados com sucesso.");
@@ -128,19 +170,19 @@ const server = http.createServer((req, res) => {
             body += chunk;
         });
         req.on("end", () => {
-            const parsedBody: Tour & { id: number } = JSON.parse(body);
+            const parsedBody: Review & { id: number } = JSON.parse(body);
             console.log(parsedBody);
 
             updateData.run(
-              parsedBody.name,
-              parsedBody.city,
-              parsedBody.country,
-              parsedBody.date_start,
-              parsedBody.date_end,
-              parsedBody.avgReview,
-              parsedBody.duration,
-              parsedBody.price,
-              parsedBody.id
+                parsedBody.user_name,
+                parsedBody.user_email,
+                parsedBody.message,
+                parsedBody.services,
+                parsedBody.price,
+                parsedBody.location,
+                parsedBody.food,
+                parsedBody.amenities,
+                parsedBody.comfort
             );
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end("Dados modificados com sucesso.");
