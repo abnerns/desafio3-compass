@@ -1,16 +1,28 @@
-import express from "express";
+import express from 'express';
+import { PORT, mongoDBURL } from './config.js';
+import mongoose from 'mongoose';
+import { Tour } from '../models/tourModels.js';
+import toursRoute from '../routes/toursRoute.js';
+
 const app = express();
 
-const port = 8000;
+app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Hello world..!")
-})
+app.get('/', (req, res) => {
+  console.log(req);
+  res.send("Hello world")
+});
 
-app.get("/hi", (req, res) => {
-    res.send("Hi")
-})
+app.use('/tours', toursRoute);
 
-app.listen(port, () => {
-    console.log("Server started at 8000")
-})
+mongoose
+  .connect(mongoDBURL)
+  .then(() => {
+    console.log('App connected to database');
+    app.listen(PORT, () => {
+      console.log(`App is listening to port: ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
