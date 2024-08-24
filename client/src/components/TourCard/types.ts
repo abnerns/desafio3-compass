@@ -1,6 +1,8 @@
+export interface TourCardTypes {
+    id: number;
+    name: string;
+}
+
 export interface TourCardProps {
-    icon: React.ReactElement;
-    type: string;
-    quantity: string;
-    price: number;
+    category: TourCardTypes;
 }

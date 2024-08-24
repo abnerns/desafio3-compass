@@ -1,6 +1,6 @@
 import http from 'http';
 import sqlite3 from 'sqlite3';
-import { Review, Tour } from './types';
+import { Categ, Review, Tour } from './types';
 
 const db = new sqlite3.Database("app.db", (err: Error | null) => {
     if (err) {
@@ -71,7 +71,7 @@ db.run(
   }
 );
 
-const search = (callback: (rows: Tour[]) => void): void => {
+const searchTours = (callback: (rows: Tour[]) => void): void => {
     db.all("SELECT * FROM tours", (err: Error | null, rows: Tour[]) => {
         if (err) {
             console.error(err.message);
@@ -79,6 +79,16 @@ const search = (callback: (rows: Tour[]) => void): void => {
             callback(rows);
         }
     });
+};
+
+const searchCategories = (callback: (rows: Categ[]) => void): void => {
+  db.all("SELECT * FROM categories", (err: Error | null, rows: Categ[]) => {
+      if (err) {
+          console.error(err.message);
+      } else {
+          callback(rows);
+      }
+  });
 };
 
 const insertData = db.prepare(
@@ -124,12 +134,18 @@ const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-    if (req.method === "GET") {
-        search((result) => {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify(result));
-            res.end();
-        });
+    if (req.method === "GET" && req.url === "/tours") {
+      searchTours((result) => {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.write(JSON.stringify(result));
+          res.end();
+      });
+  } else if (req.method === "GET" && req.url === "/categories") {
+      searchCategories((result) => {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.write(JSON.stringify(result));
+          res.end();
+      });
     } else if (req.method === "POST") {
         let body = "";
         req.on("data", (chunk) => {
