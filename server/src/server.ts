@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import toursRoute from '../routes/toursRoute.js';
 import cors from 'cors';
 
+import multer from 'multer';
+
 const app = express();
 
 /* app.use(
@@ -34,3 +36,6 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+  const storage = multer.memoryStorage()
+  const upload = multer({ storage: storage })
