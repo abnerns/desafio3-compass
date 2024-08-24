@@ -67,8 +67,8 @@ const Footer = () => {
             <div style={{display: 'flex', gap:'1rem', flexFlow: 'column'}}>
                 <p className={styles.cursive}>Sign up Newsletter</p>
                 <div className={styles.form}>
-                <form onSubmit={handleSubmit(onSubmit)} className={`${styles.inputField} ${errors.email ? styles.error : ''}`}>
-                    <div className={styles.inputWrapper}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className={`${styles.inputField} ${errors.email ? styles.error : ''}`}>
                     <Send color="black" opacity={0.6} size={18} />
                     <input type="text"
                         id="email"
