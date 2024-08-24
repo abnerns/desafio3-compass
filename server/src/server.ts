@@ -1,41 +1,31 @@
 import express from 'express';
-import { PORT, mongoDBURL } from './config.js';
-import mongoose from 'mongoose';
-import toursRoute from '../routes/toursRoute.js';
-import cors from 'cors';
+import db from '../db/connections'
+import bodyParser from 'body-parser';
+import toursRouter from '../routes/tours';
+import { ExpressHandlebars } from 'express-handlebars';
 
-import multer from 'multer';
-
+const PORT = 8000;
 const app = express();
 
-/* app.use(
-    cors({
-        origin: 'https://localhost:8000',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type'],
-    })
-) */
+app.listen(PORT, () => {
+  console.log(`App is listening to port: ${PORT}`);
+});
 
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
+db.authenticate()
+  .then(() => {
+    console.log("Conectou com sucesso");
+  })
+  .catch(err => {
+    console.log("Ocorreu um erro", err);
+  });
 
 app.get('/', (req, res) => {
   console.log(req);
-  res.send("Hello world")
+  res.send("Está funcionando");
 });
 
-app.use('/tours', toursRoute);
 
-mongoose
-  .connect(mongoDBURL)
-  .then(() => {
-    console.log('App connected to database');
-    app.listen(PORT, () => {
-      console.log(`App is listening to port: ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-  const storage = multer.memoryStorage()
-  const upload = multer({ storage: storage })
+app.use('/tours', toursRouter);
