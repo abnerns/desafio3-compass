@@ -7,6 +7,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import styles from "./Home.module.css";
 import { RiDoubleQuotesR } from "react-icons/ri";
 import { VscPlayCircle } from "react-icons/vsc";
+import TourDestination from "../../components/TourDestination/TourDestination";
 
 function Home() {
 
@@ -36,23 +37,23 @@ function Home() {
           <p className={styles.subtitle}>Destination</p>
           <p style={{fontFamily: 'Work Sans', fontWeight: 'bold', fontSize: '40px', marginBottom: '3rem'}}>Top Attractions Destination</p>
           <div className={styles.grid}>
-                <figure className={styles.gridItem} >
-                  <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" alt="rocky" />
+                <figure className={styles.gridItem} style={{gridColumn: '1 / 4'}} >
+                  <TourDestination />
                 </figure>
-                <figure className={styles.gridItem}>
-                  <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" alt="rocky" />
+                <figure className={styles.gridItem} style={{gridColumn: '4 / 7'}}>
+                  <TourDestination />
                 </figure>
-                <figure className={styles.gridItem}>
-                  <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" alt="rocky" />
+                <figure className={styles.gridItem} style={{gridColumn: '7 / 10'}}>
+                  <TourDestination />
                 </figure>
-                <figure className={styles.gridItem} style={{gridRowStart: '1', gridRowEnd: '3', gridColumnStart: '4'}}>
-                  <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" alt="rocky" />
+                <figure className={styles.gridItem} style={{gridRow: '1 / 3', gridColumn: '10 / 13'}}>
+                  <TourDestination />
                 </figure>
-                <figure className={styles.gridItem} >
-                  <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" alt="rocky" />
+                <figure className={styles.gridItem} style={{gridColumn: '1 / 5'}} >
+                  <TourDestination />
                 </figure>
-                <figure className={styles.gridItem} >
-                  <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" alt="rocky" />
+                <figure className={styles.gridItem} style={{gridColumn: '5 / 10'}}>
+                  <TourDestination />
                 </figure>
           </div>
         </div>
