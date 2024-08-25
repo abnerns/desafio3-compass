@@ -112,11 +112,11 @@ const Header = () => {
         </Container>
         <div className={styles.userNav}>
             {showForm && (
-            <Form className={"d-flex"}>
-                <Form.Control type="search" placeholder="Search" className="me-2" />
+            <Form className={"d-flex"} style={{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
+                <Form.Control type="search" placeholder="Search" className="me-2" style={{boxShadow: 'none', borderColor: 'white', outline: 'none'}} />
             </Form>
             )}
-            <Search size={22} onClick={handleForm} style={{ cursor: "pointer" }} />
+            <Search size={22} onClick={handleForm} className={styles.cursor} />
             {userDetails ? (
             <div className={styles.userOn}>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.75rem", color: "#EB565A", fontWeight: "bold" }}>

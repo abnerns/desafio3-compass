@@ -8,8 +8,6 @@ const SearchBox = (props: SearchBoxProps) => {
         <div className={styles.field}>
           <div className={styles.icon}>{props.icon}</div>
           <input
-            type={props.type}
-            id={props.id}
             placeholder={props.placeholder}
             className={styles.input}
           />     

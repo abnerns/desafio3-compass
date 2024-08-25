@@ -6,6 +6,12 @@
     font-family: "Work Sans", sans-serif;
     background-color: rgb(243, 242, 242);
     justify-content: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.container:hover{
+    transform: scale(1.02);
+    cursor: pointer;
 }
 
 .container p{
@@ -92,9 +98,9 @@
 }
 
 .icon{
-    position: absolute; /* Posiciona o ícone de forma absoluta dentro do contêiner pai */
-    top: 5%; /* Ajuste a posição superior conforme necessário */
-    right: 5%; /* Coloca o ícone colado à direita */
+    position: absolute;
+    top: 5%;
+    right: 5%; 
     height: 4vh;
     width: 2vw;
     background-color: rgb(243, 242, 242);

@@ -51,10 +51,10 @@
 }
 
 .userOff button:hover{
-    background-color: lightgrey;
+    background-color: #e6e8ee;
     border-radius: 10px;
     transition: 0.3s;
-    padding: 0.5rem;
+    padding: 0.3rem;
 }
 
 .userOn{
@@ -64,10 +64,10 @@
 }
 
 .userOn button:hover{
-    background-color: lightgrey;
+    background-color: #e6e8ee;
     border-radius: 10px;
     transition: 0.3s;
-    padding: 0.5rem;
+    padding: 0.3rem;
 }
 
 .userOn p{
@@ -99,4 +99,13 @@
 
 .upperLine p {
     margin: 0;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+.cursor:hover{
+    background-color: #e6e8ee;
+    border-radius: 50%;
 }
