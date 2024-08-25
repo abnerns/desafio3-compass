@@ -91,6 +91,19 @@ const searchCategories = (callback: (rows: Categ[]) => void): void => {
   });
 };
 
+const getCountByCategory = (callback: (rows: Categ[]) => void): void => {
+  db.all(
+      `SELECT idCateg, COUNT(*) as count FROM tours GROUP BY idCateg`,
+      (err: Error | null, rows: Categ[]) => {
+          if (err) {
+              console.error(err.message);
+          } else {
+              callback(rows);
+          }
+      }
+  );
+};
+
 const insertData = db.prepare(
   `INSERT INTO reviews (user_name, user_email, message, services, price, location, food, amenities, comfort)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -140,12 +153,21 @@ const server = http.createServer((req, res) => {
           res.write(JSON.stringify(result));
           res.end();
       });
+
   } else if (req.method === "GET" && req.url === "/categories") {
       searchCategories((result) => {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify(result));
           res.end();
       });
+
+    } else if (req.method === "GET" && req.url === "/tours/countByCategory") {
+      getCountByCategory((result) => {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.write(JSON.stringify(result));
+          res.end();
+      });
+
     } else if (req.method === "POST") {
         let body = "";
         req.on("data", (chunk) => {

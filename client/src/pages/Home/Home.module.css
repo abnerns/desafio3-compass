@@ -1,5 +1,5 @@
 .body{
     display: flex;
-    flex-flow: column nowrap;
-    min-height: 100vh;
+    flex-flow: column wrap;
+    gap: 5rem;
 }

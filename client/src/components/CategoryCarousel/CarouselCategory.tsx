@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react";
 import TourCard from "../TourCard/TourCard";
 import { TourCardTypes } from "../TourCard/types";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { TourCount } from "./types";
 
 const CarouselCategory = () => {
     const [categories, setCategories] = useState<TourCardTypes[]>([]);
+    const [tourCounts, setCount] = useState<TourCount[]>([]);
+
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 6,
+      slidesToScroll: 2
+    };
 
     useEffect(() => {
         fetch("http://localhost:8000/categories")
@@ -12,14 +25,28 @@ const CarouselCategory = () => {
             console.log("Dados recebidos do servidor:", data);
             setCategories(data);
           })
-          .catch((error) => console.error("Erro ao buscar dados:", error));
+          .catch((error) => console.error("Erro", error));
+
+          fetch("http://localhost:8000/tours/countByCategory")
+          .then((response) => response.json())
+          .then((data) => {
+            setCount(data);
+          })
+          .catch((error) => console.error("Erro ao buscar contagem", error));
       }, []);
 
+      const getCountByCategory = (idCateg: number) => {
+        const categoryCount = tourCounts.find((count) => count.idCateg === idCateg);
+        return categoryCount ? categoryCount.count : 0;
+    };
+
   return (
-    <div>
-        {categories.map((category) => (
-          <TourCard key={category.id} category={category} />
-        ))}
+    <div style={{width: '76.8vw'}}>
+        <Slider {...settings}>
+          {categories.map((category) => (
+            <TourCard key={category.id} category={category} tourCount={getCountByCategory(category.id)} />
+          ))}
+        </Slider>
     </div>
   );
 }
