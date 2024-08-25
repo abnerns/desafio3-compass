@@ -6,4 +6,5 @@ export interface TourCardTypes {
 export interface TourCardProps {
     category: TourCardTypes;
     tourCount: number;
+    lowestPrice: number;
 }

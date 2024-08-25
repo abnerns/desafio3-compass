@@ -71,34 +71,47 @@ db.run(
   }
 );
 
-const searchTours = (callback: (rows: Tour[]) => void): void => {
-    db.all("SELECT * FROM tours", (err: Error | null, rows: Tour[]) => {
+const searchTours = (callback: (res: Tour[]) => void): void => {
+    db.all("SELECT * FROM tours", (err: Error | null, res: Tour[]) => {
         if (err) {
             console.error(err.message);
         } else {
-            callback(rows);
+            callback(res);
         }
     });
 };
 
-const searchCategories = (callback: (rows: Categ[]) => void): void => {
-  db.all("SELECT * FROM categories", (err: Error | null, rows: Categ[]) => {
+const searchCategories = (callback: (res: Categ[]) => void): void => {
+  db.all("SELECT * FROM categories", (err: Error | null, res: Categ[]) => {
       if (err) {
           console.error(err.message);
       } else {
-          callback(rows);
+          callback(res);
       }
   });
 };
 
-const getCountByCategory = (callback: (rows: Categ[]) => void): void => {
+const getCountByCategory = (callback: (res: Categ[]) => void): void => {
   db.all(
       `SELECT idCateg, COUNT(*) as count FROM tours GROUP BY idCateg`,
-      (err: Error | null, rows: Categ[]) => {
+      (err: Error | null, res: Categ[]) => {
           if (err) {
               console.error(err.message);
           } else {
-              callback(rows);
+              callback(res);
+          }
+      }
+  );
+};
+
+const getLowestPrice = (callback: (res: Categ[]) => void): void => {
+  db.all(
+      `SELECT idCateg, MIN(price) as lowestPrice FROM tours GROUP BY idCateg`,
+      (err: Error | null, res: Categ[]) => {
+          if (err) {
+              console.error(err.message);
+          } else {
+              callback(res);
           }
       }
   );
@@ -163,6 +176,13 @@ const server = http.createServer((req, res) => {
 
     } else if (req.method === "GET" && req.url === "/tours/countByCategory") {
       getCountByCategory((result) => {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.write(JSON.stringify(result));
+          res.end();
+      });
+
+    } else if (req.method === "GET" && req.url === "/tours/lowestPrice") {
+      getLowestPrice((result) => {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify(result));
           res.end();

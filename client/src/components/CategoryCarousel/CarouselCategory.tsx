@@ -9,6 +9,7 @@ import { TourCount } from "./types";
 const CarouselCategory = () => {
     const [categories, setCategories] = useState<TourCardTypes[]>([]);
     const [tourCounts, setCount] = useState<TourCount[]>([]);
+    const [lowestPrices, setLowestPrices] = useState<{ idCateg: number; lowestPrice: number }[]>([]);
 
     const settings = {
       dots: true,
@@ -33,18 +34,30 @@ const CarouselCategory = () => {
             setCount(data);
           })
           .catch((error) => console.error("Erro ao buscar contagem", error));
+
+          fetch("http://localhost:8000/tours/lowestPrice")
+          .then((response) => response.json())
+          .then((data) => {
+            setLowestPrices(data);
+          })
+          .catch((error) => console.error("Erro ao buscar menor preço", error));
       }, []);
 
-      const getCountByCategory = (idCateg: number) => {
-        const categoryCount = tourCounts.find((count) => count.idCateg === idCateg);
-        return categoryCount ? categoryCount.count : 0;
+    const getCountByCategory = (idCateg: number) => {
+      const categoryCount = tourCounts.find((count) => count.idCateg === idCateg);
+      return categoryCount ? categoryCount.count : 0;
     };
+
+    const getLowestPrice = (idCateg: number) => {
+      const categoryPrice = lowestPrices.find((price) => price.idCateg === idCateg);
+      return categoryPrice ? categoryPrice.lowestPrice : 0;
+  };
 
   return (
     <div style={{width: '76.8vw'}}>
         <Slider {...settings}>
           {categories.map((category) => (
-            <TourCard key={category.id} category={category} tourCount={getCountByCategory(category.id)} />
+            <TourCard key={category.id} category={category} tourCount={getCountByCategory(category.id)} lowestPrice={getLowestPrice(category.id)} />
           ))}
         </Slider>
     </div>
