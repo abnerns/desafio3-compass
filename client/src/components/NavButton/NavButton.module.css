@@ -1,5 +1,5 @@
 .button{
-    background-color: rgb(231, 75, 75);
+    background-color: #FC5056;
     width: 8vw;
     height: 6.25vh;
     display: flex;
@@ -13,5 +13,5 @@
 
 .button:hover{
     cursor: pointer;
-    background-color: rgb(189, 59, 59);
+    background-color: #dd464b;
 }

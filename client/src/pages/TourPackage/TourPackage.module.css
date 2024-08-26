@@ -1,0 +1,79 @@
+.body{
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    gap: 5rem;
+}
+
+.homeHeader {
+    width: 100%;
+    background-image: url('https://3challenge-compass.s3.us-east-2.amazonaws.com/header2.png');
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+    height: 38vh;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main{
+    font-family: 'Work Sans', sans-serif;
+    display: flex;
+}
+
+.aside{
+    width: 18vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.container{
+    background-color: #F7F8FA;
+    padding: 1.75rem !important;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle{
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.input{
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    width: 14.5vw;
+}
+
+.price{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.rangeSlider {
+    width: 100%;
+    margin: 10px 0;
+    appearance: none;
+    -webkit-appearance: none;
+    height: 6px;
+    background: #ddd;
+  }
+
+.rangeSlider::-moz-range-thumb {
+    background: #FC5056;
+    cursor: pointer;
+    border: none;
+}
+
