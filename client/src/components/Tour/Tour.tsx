@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./Tour.module.css";
 import { TourProps } from "./types";
 
-const Tour: React.FC<TourProps> = ({ tour }) => {
+const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
   const [like, setLike] = useState(false);
 
   const handleLike = () => {
@@ -30,7 +30,7 @@ const Tour: React.FC<TourProps> = ({ tour }) => {
                 <Star size={12} fill="white" />
                 <span>{tour.avgReview}</span>
                 </span>
-                <p>10+ reviews</p>
+                <p>{reviewCount}+ reviews</p>
             </div>
             <p>{tour.duration} days</p>
             </div>

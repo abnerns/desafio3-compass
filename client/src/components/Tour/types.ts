@@ -13,4 +13,5 @@ export interface TourTypes {
 
 export interface TourProps {
     tour: TourTypes;
+    reviewCount: number;
   }

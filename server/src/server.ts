@@ -18,8 +18,6 @@ db.run(
   (err: Error | null) => {
     if (err) {
       console.error(err.message);
-    } else {
-      console.log("Tabela criada com sucesso.");
     }
   }
 );
@@ -41,8 +39,6 @@ db.run(
   (err: Error | null) => {
     if (err) {
       console.error(err.message);
-    } else {
-      console.log("Tabela criada com sucesso.");
     }
   }
 );
@@ -65,8 +61,6 @@ db.run(
   (err: Error | null) => {
     if (err) {
       console.error(err.message);
-    } else {
-      console.log("Tabela criada com sucesso.");
     }
   }
 );
@@ -95,6 +89,19 @@ const getCountByCategory = (callback: (res: Categ[]) => void): void => {
   db.all(
       `SELECT idCateg, COUNT(*) as count FROM tours GROUP BY idCateg`,
       (err: Error | null, res: Categ[]) => {
+          if (err) {
+              console.error(err.message);
+          } else {
+              callback(res);
+          }
+      }
+  );
+};
+
+const getCountByReview = (callback: (res: { idTour: number, count: number }[]) => void): void => {
+  db.all(
+      `SELECT idTour, COUNT(*) as count FROM reviews GROUP BY idTour`,
+      (err: Error | null, res: { idTour: number, count: number }[]) => {
           if (err) {
               console.error(err.message);
           } else {
@@ -183,6 +190,13 @@ const server = http.createServer((req, res) => {
 
     } else if (req.method === "GET" && req.url === "/tours/lowestPrice") {
       getLowestPrice((result) => {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.write(JSON.stringify(result));
+          res.end();
+      });
+
+    } else if (req.method === "GET" && req.url === "/reviews/countByReview") {
+      getCountByReview((result) => {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify(result));
           res.end();
