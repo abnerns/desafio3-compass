@@ -1,0 +1,31 @@
+.body{
+    font-family: 'Work Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 1005;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 2rem 2rem 0 ;
+}
+
+.info span{
+    opacity: 0.7;
+}
+
+.info p{
+    margin: 0;
+    font-weight: bold;
+}
+
+.infoBox{
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    font-size: 24px;
+    font-weight: bold;
+}
