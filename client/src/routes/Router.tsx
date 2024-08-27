@@ -44,7 +44,7 @@ function Router () {
                     <TourPackage />
                 </ProtectedRoute>
             } />
-            <Route path="/tours-info" element={
+            <Route path="/tours-details" element={
                 <ProtectedRoute user={user}>
                     <TourDetails />
                 </ProtectedRoute>
