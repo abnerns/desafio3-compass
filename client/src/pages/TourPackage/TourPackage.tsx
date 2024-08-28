@@ -14,6 +14,7 @@ const TourPackage = () => {
   const [tours, setTours] = useState<TourType[]>([]);
   const [limit, setLimit] = useState(3);  // limit é constante, sem necessidade de setLimit
   const [offset, setOffset] = useState(0);
+  const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
 
   useEffect(() => {
     fetch(`http://localhost:8000/tours?limit=${limit}&offset=${offset}`)
@@ -24,6 +25,17 @@ const TourPackage = () => {
       })
       .catch((error) => console.error("Erro ao buscar dados.", error));
   }, [limit, offset]);
+
+  fetch("http://localhost:8000/countByReview")
+          .then((response) => response.json())
+          .then((data) => {
+            const counts: { [key: number]: number } = {};
+            data.forEach((review: { idTour: number, count: number }) => {
+              counts[review.idTour] = review.count;
+            });
+            setReviewCounts(counts);
+          })
+          .catch((error) => console.error("Erro ao buscar contagem de reviews:", error));
 
   return (
     <div>
@@ -88,7 +100,7 @@ const TourPackage = () => {
             </div>
             <div className={styles.content}>
               {tours.map((tour) => (
-                <Tour key={tour.id} tour={tour} />
+                <Tour key={tour.id} tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
               ))}
             </div>
             <div className={styles.pagination}>

@@ -189,21 +189,21 @@ const server = http.createServer((req, res) => {
             res.end();
         });
 
-    } else if (req.method === "GET" && req.url === "/tours/countByCategory") {
+    } else if (req.method === "GET" && req.url === "/countByCategory") {
       getCountByCategory((result) => {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify(result));
           res.end();
       });
 
-    } else if (req.method === "GET" && req.url === "/tours/lowestPrice") {
+    } else if (req.method === "GET" && req.url === "/lowestPrice") {
       getLowestPrice((result) => {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify(result));
           res.end();
       });
 
-    } else if (req.method === "GET" && req.url === "/reviews/countByReview") {
+    } else if (req.method === "GET" && req.url === "/countByReview") {
       getCountByReview((result) => {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify(result));

@@ -28,7 +28,7 @@ const CarouselTour = () => {
           })
           .catch((error) => console.error("Erro ao buscar dados:", error));
 
-          fetch("http://localhost:8000/reviews/countByReview")
+          fetch("http://localhost:8000/countByReview")
           .then((response) => response.json())
           .then((data) => {
             const counts: { [key: number]: number } = {};
