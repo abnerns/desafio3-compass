@@ -50,3 +50,9 @@
 .input input{
     width: 120px;
 }
+
+.content{
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
