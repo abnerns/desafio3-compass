@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Filters.module.css"
 import { Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { CiSearch } from "react-icons/ci";
 import NavButton from "../NavButton/NavButton";
+import { Categ } from "./types";
 
 const Filters = () => {
     const [priceFilter, setPriceFilter] = useState<number>(150);
+    const [categories, setCategories] = useState<Categ[]>([]);
 
     const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
       setPriceFilter(Number(event.target.value));
     };
+
+    useEffect(() => {
+      fetch('http://localhost:8000/categories')
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Dados recebidos do servidor.", data);
+          setCategories(data);
+        })
+        .catch((error) => console.error("Erro ao buscar dados.", error));
+    }, []);
 
   return (
     <div className={styles.aside}>
@@ -45,14 +59,9 @@ const Filters = () => {
               <Container className={styles.container}>
                 <p className={styles.title}>Categories</p>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="Adventure" />
-                  <Form.Check type="checkbox" label="Beaches" />
-                  <Form.Check type="checkbox" label="Boat Tours" />
-                  <Form.Check type="checkbox" label="City Tours" />
-                  <Form.Check type="checkbox" label="Food" />
-                  <Form.Check type="checkbox" label="Hiking" />
-                  <Form.Check type="checkbox" label="Honeymoon" />
-                  <Form.Check type="checkbox" label="Museum Tours" />
+                  {categories.map((category) => (
+                      <Form.Check type="checkbox" label={category.name} />
+                  ))}
                 </Form.Group>
               </Container>
               <Container className={styles.container}>

@@ -65,14 +65,18 @@ db.run(
   }
 );
 
-const searchTours = (callback: (res: Tour[]) => void): void => {
-    db.all("SELECT * FROM tours", (err: Error | null, res: Tour[]) => {
-        if (err) {
-            console.error(err.message);
-        } else {
-            callback(res);
-        }
-    });
+const searchTours = (limit: number, offset: number, callback: (res: Tour[]) => void): void => {
+  db.all(
+      "SELECT * FROM tours LIMIT ? OFFSET ?",
+      [limit, offset],
+      (err: Error | null, res: Tour[]) => {
+          if (err) {
+              console.error(err.message);
+          } else {
+              callback(res);
+          }
+      }
+  );
 };
 
 const searchCategories = (callback: (res: Categ[]) => void): void => {
@@ -167,19 +171,23 @@ const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-    if (req.method === "GET" && req.url === "/tours") {
-      searchTours((result) => {
+    if (req.method === "GET" && req.url?.startsWith("/tours")) {
+      const url = new URL(req.url, `http://${req.headers.host}`);
+      const limit = parseInt(url.searchParams.get("limit") || "9");
+      const offset = parseInt(url.searchParams.get("offset") || "0");
+
+      searchTours(limit, offset, (result) => {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify(result));
           res.end();
       });
 
-  } else if (req.method === "GET" && req.url === "/categories") {
-      searchCategories((result) => {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.write(JSON.stringify(result));
-          res.end();
-      });
+    } else if (req.method === "GET" && req.url === "/categories") {
+        searchCategories((result) => {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.write(JSON.stringify(result));
+            res.end();
+        });
 
     } else if (req.method === "GET" && req.url === "/tours/countByCategory") {
       getCountByCategory((result) => {
