@@ -1,0 +1,45 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  tours Tour[]
+}
+
+model Tour {
+  id         Int      @id @default(autoincrement())
+  name       String
+  city       String
+  country    String
+  price      Int
+  date_start String
+  avgReview  Int
+  duration   Int
+  maxPeople  Int
+  minAge     Int
+  idCateg    Int
+  category   Category @relation(fields: [idCateg], references: [id])
+  reviews    Review[]
+}
+
+model Review {
+  id        Int    @id @default(autoincrement())
+  idTour    Int
+  user_name String
+  user_email String
+  message   String
+  services  Int
+  price     Int
+  location  Int
+  food      Int
+  amenities Int
+  comfort   Int
+  tour      Tour   @relation(fields: [idTour], references: [id])
+}

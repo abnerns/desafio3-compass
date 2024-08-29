@@ -4,7 +4,7 @@ import { TourCardTypes } from "../TourCard/types";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { TourCount } from "./types";
+import { CountCategoryData, LowestPriceData, TourCount } from "./types";
 
 const CarouselCategory = () => {
     const [categories, setCategories] = useState<TourCardTypes[]>([]);
@@ -30,15 +30,20 @@ const CarouselCategory = () => {
 
           fetch("http://localhost:8000/countByCategory")
           .then((response) => response.json())
-          .then((data) => {
-            setCount(data);
+          .then((data : CountCategoryData[]) => {
+            const formattedData = data.map((item) => ({ idCateg: item.idCateg, count: item._count.idCateg }));
+            setCount(formattedData);
           })
           .catch((error) => console.error("Erro ao buscar contagem", error));
 
           fetch("http://localhost:8000/lowestPrice")
           .then((response) => response.json())
-          .then((data) => {
-            setLowestPrices(data);
+          .then((data : LowestPriceData[] ) => {
+            const formattedPrices = data.map((item) => ({
+              idCateg: item.idCateg,
+              lowestPrice: item._min.price,
+            }));
+            setLowestPrices(formattedPrices);
           })
           .catch((error) => console.error("Erro ao buscar menor preço", error));
       }, []);
