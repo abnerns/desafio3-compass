@@ -1,0 +1,39 @@
+.container {
+    background-color: #F7F8FA;
+    width: 777px;
+    height: 261px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+.avgBox{
+    background-color: #FD5056;
+    color: white;
+    width: 180px;
+    height: 201px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewBox{
+    width: 502px;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.reviewBox p{
+    margin: 0;
+}
+
+.reviewBox span {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-right: 1rem;
+}
