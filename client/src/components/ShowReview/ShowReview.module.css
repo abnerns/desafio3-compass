@@ -1,0 +1,52 @@
+.title{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.review{
+    width: 770px;
+    height: 207px;
+    border: 1px solid #A9AFBB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.review img{
+    width: 120px;
+    height: 120px;
+}
+
+.star{
+    color: white;
+    font-size: 13px;
+    padding: 0.2rem;
+    background-color: rgb(231, 75, 75);
+    height: 2.5vh;
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.star:hover{
+    background-color: rgb(189, 59, 59);
+}
+
+.avgReview{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.content p{
+    margin: 0;
+}
