@@ -3,7 +3,7 @@ import { FiShare2 } from "react-icons/fi"
 import { GrLocation } from "react-icons/gr"
 import styles from "./TourInfo.module.css"
 import { TiStarFullOutline } from "react-icons/ti"
-import AverageReview from "../AverageReview/AverageReview"
+import AddReview from "../AddReview/AddReview"
 
 const TourInfo = () => {
   return (
@@ -55,7 +55,7 @@ const TourInfo = () => {
         </div>
         <div>
             <p className={styles.title}>Average Reviews</p>
-            <AverageReview />
+            <AddReview />
         </div>
     </div>
   )

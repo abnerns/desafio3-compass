@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form{
+    width: 770px;
+    height: 532px;
+    background-color: #F7F8FA;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.input{
+    width: 346px;
+    height: 56px;
+    border-radius: 8px;
+}
+
+.textarea {
+    width: 710px;
+    height: 121px;
+    resize: none;
+}
+
+.button{
+    width: 181px;
+    height: 55px;
+    background-color: #FC5056;
+    padding: 1rem;
+    color: white;
+    border-radius: 8px;
+}
+
+.button:hover{
+    background-color: #dd464b;
+}

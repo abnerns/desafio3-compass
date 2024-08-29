@@ -1,7 +1,6 @@
 import { FaStar } from "react-icons/fa"
 import styles from "./AverageReview.module.css"
 import { ProgressBar } from "react-bootstrap"
-import ShowReview from "../ShowReview/ShowReview"
 
 const AverageReview = () => {
   return (
@@ -20,7 +19,6 @@ const AverageReview = () => {
                 <div><p>Room comfort and quality</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>4.0</p></span></div>
             </div>
         </div>
-        <ShowReview />
     </div>
     
   )
