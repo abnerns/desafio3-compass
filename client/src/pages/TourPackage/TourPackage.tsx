@@ -34,7 +34,7 @@ const TourPackage = () => {
       })
       .catch((error) => console.error("Erro ao buscar dados.", error));
 
-      fetch("http://localhost:8000/countByReview")
+      fetch("http://localhost:8000/reviews/countByReview")
       .then((response) => response.json())
       .then((data) => {
         const counts: { [key: number]: number } = {};
@@ -45,7 +45,7 @@ const TourPackage = () => {
       })
       .catch((error) => console.error("Erro ao buscar contagem de reviews:", error));
 
-      fetch("http://localhost:8000/totalTour")
+      fetch("http://localhost:8000/tours/total")
       .then((response) => response.json())
       .then((data) => {
         setTotalTour(data.count);

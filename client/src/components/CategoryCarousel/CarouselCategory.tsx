@@ -28,14 +28,14 @@ const CarouselCategory = () => {
           })
           .catch((error) => console.error("Erro", error));
 
-          fetch("http://localhost:8000/countByCategory")
+          fetch("http://localhost:8000/tours/countByCategory")
           .then((response) => response.json())
           .then((data) => {
             setCount(data);
           })
           .catch((error) => console.error("Erro ao buscar contagem", error));
 
-          fetch("http://localhost:8000/lowestPrice")
+          fetch("http://localhost:8000/tours/lowestPrice")
           .then((response) => response.json())
           .then((data) => {
             setLowestPrices(data);
