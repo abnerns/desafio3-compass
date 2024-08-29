@@ -6,25 +6,24 @@ import { CiSearch } from "react-icons/ci";
 import NavButton from "../NavButton/NavButton";
 import { Categ } from "./types";
 
-const Filters = () => {
-    const [priceFilter, setPriceFilter] = useState<number>(150);
-    const [categories, setCategories] = useState<Categ[]>([]);
+const Filters = ({ onCategoryChange }: { onCategoryChange: (id: number | null) => void }) => {
+  const [priceFilter, setPriceFilter] = useState<number>(150);
+  const [categories, setCategories] = useState<Categ[]>([]);
 
-    const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPriceFilter(Number(event.target.value));
-    };
+  const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceFilter(Number(event.target.value));
+  };
 
-    useEffect(() => {
-      fetch('http://localhost:8000/categories')
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Dados recebidos do servidor.", data);
-          setCategories(data);
-        })
-        .catch((error) => console.error("Erro ao buscar dados.", error));
-    }, []);
+  useEffect(() => {
+    fetch('http://localhost:8000/categories')
+      .then((response) => response.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.error("Erro ao buscar dados.", error));
+  }, []);
+
+  const handleCategoryChange = (idCateg: number) => {
+    onCategoryChange(idCateg);
+  };
 
   return (
     <div className={styles.aside}>
@@ -60,7 +59,7 @@ const Filters = () => {
                 <p className={styles.title}>Categories</p>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   {categories.map((category) => (
-                      <Form.Check type="checkbox" label={category.name} />
+                      <Form.Check type="checkbox" label={category.name} key={category.id} onChange={() => handleCategoryChange(category.id)}  />
                   ))}
                 </Form.Group>
               </Container>

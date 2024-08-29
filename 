@@ -1,0 +1,224 @@
+[33mcommit 2b2909c68b7830f739170d98be40d678a4f7d066[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Wed Aug 28 21:50:18 2024 -0300
+
+    refactor: update tourController and server to use Prisma for CRUD operations
+
+[33mcommit ea97fed8c8a5a8027bda14130c529aa4df3989e6[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Wed Aug 28 20:31:22 2024 -0300
+
+    fix: routes not working properly
+
+[33mcommit 41e273c4b13e3d5e9ad944ded5613da49dbf5792[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Wed Aug 28 15:10:54 2024 -0300
+
+    feat: add backend pagination for showing tour packages
+
+[33mcommit bd67ae87558168dd4be50315d5bff9adea17324e[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Wed Aug 28 13:51:08 2024 -0300
+
+    feat: add route for category filtering
+
+[33mcommit debe3aeda31c462d05e31f3c48417adf2fe4c3e9[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Tue Aug 27 19:25:38 2024 -0300
+
+    feat: add filters component and update tour package page
+
+[33mcommit a74b35a4c23d87428af212f03f8196c5f4cb637e[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Tue Aug 27 18:02:21 2024 -0300
+
+    feat: add tour info components and styles to tour details page
+
+[33mcommit c6d5127417d5bb49b5dc53e9b9ec89366c9a3ae8[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Tue Aug 27 16:34:35 2024 -0300
+
+    feat: add tourdetails page and book tour component
+
+[33mcommit 11e21bcbfc6faac133faaf8da48ad85cbb014faf[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Mon Aug 26 15:27:56 2024 -0300
+
+    feat: add route to count number of reviews by tour
+
+[33mcommit ec026ae6e552f31a8752fc715277b9bcd79f9075[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sun Aug 25 23:28:27 2024 -0300
+
+    feat: add aside content to tour package page
+
+[33mcommit d8057a97670878065a6a88ff4a7df1759896ad7a[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sun Aug 25 20:29:44 2024 -0300
+
+    feat: update image grid on the home page
+
+[33mcommit db75f1aeb83ec139ce7393b18947479afac80492[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sun Aug 25 18:29:19 2024 -0300
+
+    feat: add home page with components and styles
+
+[33mcommit 4daedda98473a0e30c03bb2e395763d8d3528fec[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 22:54:45 2024 -0300
+
+    feat: add route to get lowest tour prices in categories
+
+[33mcommit c764d9381029efff28333c10e7050c090a4b6a39[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 22:36:59 2024 -0300
+
+    feat: add carousel sliders in popular tours and categories cards
+
+[33mcommit 0fc6068c7660eed0ae883d06c2f93057aaa8ffd9[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 20:31:56 2024 -0300
+
+    feat: fetch categories database and insert in tour cards
+
+[33mcommit dac517b7cc108dd2bd7127e1b4348a2c6d93e58a[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 19:21:12 2024 -0300
+
+    feat: add categories and reviews databases and update tours types
+
+[33mcommit 7916aec395dd6c0564c4768b627aa0b814049f7b[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 16:57:43 2024 -0300
+
+    refactor: update database typescript and backend logic
+
+[33mcommit 91ebd5d32002f47a4cc5fbfc0c6259455c9af731[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 15:29:24 2024 -0300
+
+    chore: update sqlite logic and add fetch on frontend
+
+[33mcommit 217d77bcc849ac9c8aeeefe038ef3de5f1aac000[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 11:59:36 2024 -0300
+
+    feat: add tours table with types and POST
+
+[33mcommit 0d7d11d13929510a80e676a3ad61f91aa830bdde[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 09:48:44 2024 -0300
+
+    chore: add dependencies for sqlite
+
+[33mcommit 68ecfe869950b8fe29531a7ab4a28f199caea8a7[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 01:32:19 2024 -0300
+
+    feat: add tourdetails page to protected route
+
+[33mcommit 67cbfaf8d3cef4881023d9463b4d04d888e73c87[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Sat Aug 24 01:23:15 2024 -0300
+
+    refactor: remove axios com fetch
+
+[33mcommit d2bbd3255c64c04892bf4ce3b32fa5197d7d6f42[m[33m ([m[1;32mfeat/components[m[33m)[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 23:10:45 2024 -0300
+
+    fix: update footer style
+
+[33mcommit 317c47ef34d0826888b19cdf3b59304ae7a47bdc[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 23:09:16 2024 -0300
+
+    style: fix footer display
+
+[33mcommit 3c45441b34eafb6c8dfc09aef3d11251e42777e9[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 23:07:33 2024 -0300
+
+    style: update home body to implement components
+
+[33mcommit 5e96f5c191513adf00db2423d0a7051f53ee7b94[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 23:01:42 2024 -0300
+
+    feat: update footer to insert into homepage
+
+[33mcommit 7e6689a0f73fe73b9018c67b7e9ab9e53d9115e2[m[33m ([m[1;31morigin/feat/components[m[33m)[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 22:18:01 2024 -0300
+
+    feat: add tour model schemas and routes
+
+[33mcommit 9f1f3575a73cca4fd477db7ced95baaafc92ed13[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 22:16:54 2024 -0300
+
+    chore: add mongodb and mongoose dependencies
+
+[33mcommit ff142b2b98bb4a57d67c997cd40afc7727d77b31[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 15:26:25 2024 -0300
+
+    feat: add header component with styles and types
+
+[33mcommit 0f540856258fd4f9b15ee1dd6978580c10baae36[m[33m ([m[1;31morigin/feat/auth[m[33m, [m[1;32mfeat/auth[m[33m)[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Fri Aug 23 03:30:02 2024 -0300
+
+    feat: add login and register pages their respective styles
+
+[33mcommit d29bb10e364750bc07060af85b1baf0fc9f0015d[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 19:24:03 2024 -0300
+
+    chore: update files types to remove 'any'
+
+[33mcommit 6cb93a6f013e9e2eb48ca70a581e85ee75139f14[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 18:05:20 2024 -0300
+
+    feat: add google authentication
+
+[33mcommit 8d19fe19c2af082412c74624b5c329227552cdbb[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 17:23:49 2024 -0300
+
+    refactor: change firebase authentication method and update pages
+
+[33mcommit b13e88d155193e2a12ecf01355e3ab1d011eb6fd[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 17:13:51 2024 -0300
+
+    feat: add bootstrap and toastify dependencies for styling
+
+[33mcommit a4cd2483f6eb2c52998f355d13d7cdd3799e6116[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 13:10:35 2024 -0300
+
+    feat: add firebase authentication with email and password
+
+[33mcommit b773358a93cfd3cdb66335a5ad172ddca1972d7a[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 09:22:31 2024 -0300
+
+    feat: add some routes and pages
+
+[33mcommit 2c00fa356d3e8fdb198e5c4b42a9371d94f609b7[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 08:32:51 2024 -0300
+
+    chore: update firebase dependencies
+
+[33mcommit 480e8f33a33c606934ccd3c1d8813ef666868d2d[m
+Author: Abner do Nascimento Santos <abnerdonantos06@gmail.com>
+Date:   Thu Aug 22 00:47:15 2024 -0300
+
+    chore: add firebase dependency and configuration
+
+[33mcommit 882f482a04903b6eade5f0fa1a35b6c806b108b1[m
+Aut

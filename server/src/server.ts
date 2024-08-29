@@ -128,6 +128,30 @@ const getLowestPrice = (callback: (res: Categ[]) => void): void => {
   );
 };
 
+const searchToursByCategory = (idCateg: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
+  db.all(
+    "SELECT * FROM tours WHERE idCateg = ? LIMIT ? OFFSET ?",
+    [idCateg, limit, offset],
+    (err: Error | null, res: Tour[]) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        callback(res);
+      }
+    }
+  );
+};
+
+const getTotalTour = (callback: (count: number) => void): void => {
+    db.get("SELECT COUNT(*) as count FROM tours", (err: Error | null, res: { count: number }) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        callback(res.count);
+      }
+    });
+  };
+
 const insertData = db.prepare(
   `INSERT INTO reviews (user_name, user_email, message, services, price, location, food, amenities, comfort)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -175,12 +199,21 @@ const server = http.createServer((req, res) => {
       const url = new URL(req.url, `http://${req.headers.host}`);
       const limit = parseInt(url.searchParams.get("limit") || "9");
       const offset = parseInt(url.searchParams.get("offset") || "0");
-
-      searchTours(limit, offset, (result) => {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
+      const idCateg = url.searchParams.get("idCateg");
+  
+      if (idCateg) {
+        searchToursByCategory(parseInt(idCateg), limit, offset, (result) => {
+          res.writeHead(200, { "Content-Type": "application/json" });
           res.write(JSON.stringify(result));
           res.end();
-      });
+        });
+      } else {
+        searchTours(limit, offset, (result) => {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.write(JSON.stringify(result));
+          res.end();
+        });
+      }
 
     } else if (req.method === "GET" && req.url === "/categories") {
         searchCategories((result) => {
@@ -209,6 +242,13 @@ const server = http.createServer((req, res) => {
           res.write(JSON.stringify(result));
           res.end();
       });
+
+    } else if (req.method === "GET" && req.url === "/totalTour") {
+        getTotalTour((count) => {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.write(JSON.stringify({ count }));
+          res.end();
+        });
 
     } else if (req.method === "POST") {
         let body = "";

@@ -12,30 +12,48 @@ import Tour from "../../components/Tour/Tour";
 
 const TourPackage = () => {
   const [tours, setTours] = useState<TourType[]>([]);
-  const [limit, setLimit] = useState(3);  // limit é constante, sem necessidade de setLimit
+  const [limit] = useState(3);
   const [offset, setOffset] = useState(0);
   const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [totalTour, setTotalTour] = useState(0);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/tours?limit=${limit}&offset=${offset}`)
+    const url = new URL("http://localhost:8000/tours");
+    url.searchParams.append("limit", limit.toString());
+    url.searchParams.append("offset", offset.toString());
+    if (selectedCategory !== null) {
+      url.searchParams.append("idCateg", selectedCategory.toString());
+    }
+
+    fetch(url.toString())
       .then((response) => response.json())
       .then((data) => {
         console.log("Dados recebidos do servidor.", data);
         setTours(data);
       })
       .catch((error) => console.error("Erro ao buscar dados.", error));
-  }, [limit, offset]);
 
-  fetch("http://localhost:8000/countByReview")
-          .then((response) => response.json())
-          .then((data) => {
-            const counts: { [key: number]: number } = {};
-            data.forEach((review: { idTour: number, count: number }) => {
-              counts[review.idTour] = review.count;
-            });
-            setReviewCounts(counts);
-          })
-          .catch((error) => console.error("Erro ao buscar contagem de reviews:", error));
+      fetch("http://localhost:8000/countByReview")
+      .then((response) => response.json())
+      .then((data) => {
+        const counts: { [key: number]: number } = {};
+        data.forEach((review: { idTour: number, count: number }) => {
+          counts[review.idTour] = review.count;
+        });
+        setReviewCounts(counts);
+      })
+      .catch((error) => console.error("Erro ao buscar contagem de reviews:", error));
+
+      fetch("http://localhost:8000/totalTour")
+      .then((response) => response.json())
+      .then((data) => {
+        setTotalTour(data.count);
+      })
+      .catch((error) => console.error("Erro ao buscar contagem total de tours:", error));
+  }, [limit, offset, selectedCategory]);
+
+
 
   return (
     <div>
@@ -66,7 +84,7 @@ const TourPackage = () => {
           <SearchBar />
         </div>
         <div className={styles.main}>
-          <Filters />
+          <Filters onCategoryChange={setSelectedCategory} />
           <div className={styles.packages}>
             <div
               style={{
@@ -75,7 +93,7 @@ const TourPackage = () => {
                 alignItems: "center",
               }}
             >
-              <p style={{ margin: "0" }}>16 Tours</p>
+              <p style={{ margin: "0" }}>{totalTour} Tours</p>
               <div
                 style={{
                   display: "flex",
