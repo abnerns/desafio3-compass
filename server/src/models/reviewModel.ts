@@ -28,8 +28,8 @@ export const createReviewTable = () => {
 
 export const insertReview = (review: Review) => {
   const insertData = db.prepare(
-    `INSERT INTO reviews (user_name, user_email, message, services, price, location, food, amenities, comfort)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO reviews (idTour, user_name, user_email, message, services, price, location, food, amenities, comfort)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     (err: Error | null) => {
       if (err) {
         console.error(err.message);
@@ -38,6 +38,7 @@ export const insertReview = (review: Review) => {
   );
 
   insertData.run(
+    review.idTour,
     review.user_name,
     review.user_email,
     review.message,

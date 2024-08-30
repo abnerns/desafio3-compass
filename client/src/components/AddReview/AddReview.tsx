@@ -4,8 +4,10 @@ import ShowReview from "./ShowReview/ShowReview";
 import styles from "./AddReview.module.css";
 import { Col, Row, Form } from "react-bootstrap";
 import Stars from "./Stars/Stars";
+import { useParams } from "react-router-dom";
 
 const AddReview = () => {
+  const { id: tourId } = useParams<{ id: string }>();
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
     user_name: "",
@@ -50,6 +52,7 @@ const AddReview = () => {
     const dataToSend = {
       ...formData,
       ...ratings,
+      idTour: tourId,
     };
   
     fetch("http://localhost:8000/reviews", {

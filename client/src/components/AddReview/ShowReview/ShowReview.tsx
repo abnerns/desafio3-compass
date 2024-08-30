@@ -1,17 +1,22 @@
 import { Star } from "lucide-react";
 import styles from "./ShowReview.module.css";
 import { ReviewProps } from "../types";
+import { useParams } from "react-router-dom";
 
 const ShowReview = ({ reviews }: ReviewProps) => {
+  const { id: tourId } = useParams<{ id: string }>();
+
+  const filteredReviews = reviews.filter((review) => review.idTour === Number(tourId));
+
     return (
       <div>
-        <p className={styles.title}>Showing {reviews.length} review(s)</p>
-        {reviews.map((review) => {
-          const formattedDate = new Date(review.created_at).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          });
+        <p className={styles.title}>Showing {filteredReviews.length} review(s)</p>
+        {filteredReviews.map((review) => {
+        const formattedDate = new Date(review.created_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
   
           return (
             <div className={styles.review} key={review.id}>

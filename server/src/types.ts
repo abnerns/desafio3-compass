@@ -16,6 +16,7 @@ export interface Categ {
 }
 
 export interface Review {
+    idTour: number;
     user_name: string;
     user_email: string;
     message: string;
