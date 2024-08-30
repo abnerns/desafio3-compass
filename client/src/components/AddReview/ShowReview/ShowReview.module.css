@@ -9,7 +9,7 @@
     border: 1px solid #A9AFBB;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 1rem;
     gap: 1rem;
 }
