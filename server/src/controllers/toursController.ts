@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour } from '../models/tourModel';
+import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour, getTourById } from '../models/tourModel';
 
 export const getTours = (req: Request, res: Response) => {
   const { limit = 9, offset = 0, idCateg } = req.query;
@@ -31,4 +31,15 @@ export const getTotalTourHandler = (req: Request, res: Response) => {
     getTotalTour((count) => {
         res.status(200).json({ count });
     });
+};
+
+export const getTourDetails = (req: Request, res: Response) => {
+  const { id } = req.params;
+  getTourById(parseInt(id), (tour) => {
+    if (tour) {
+      res.status(200).json(tour);
+    } else {
+      res.status(404).json({ message: "Tour not found" });
+    }
+  });
 };

@@ -9,6 +9,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { TourType } from "../../components/Filters/types";
 import Tour from "../../components/Tour/Tour";
+import { useNavigate } from 'react-router-dom';
 
 const TourPackage = () => {
   const [tours, setTours] = useState<TourType[]>([]);
@@ -17,6 +18,7 @@ const TourPackage = () => {
   const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [totalTour, setTotalTour] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const url = new URL("http://localhost:8000/tours");
@@ -118,7 +120,9 @@ const TourPackage = () => {
             </div>
             <div className={styles.content}>
               {tours.map((tour) => (
-                <Tour key={tour.id} tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
+                <div key={tour.id} onClick={() => navigate(`/tour-details/${tour.id}`)}>
+                  <Tour  tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
+                </div>
               ))}
             </div>
             <div className={styles.pagination}>

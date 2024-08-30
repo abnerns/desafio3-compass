@@ -87,3 +87,13 @@ export const getTotalTour = (callback: (count: number) => void): void => {
       }
     });
   };
+
+  export const getTourById = (id: number, callback: (res: Tour | null) => void): void => {
+    db.get("SELECT * FROM tours WHERE id = ?", [id], (err: Error | null, res: Tour) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        callback(res);
+      }
+    });
+  };

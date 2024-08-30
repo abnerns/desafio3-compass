@@ -4,15 +4,30 @@ import Footer from "../../components/Footer/Footer"
 import Header from "../../components/Header/Header"
 import TourInfo from "../../components/TourInfo/TourInfo"
 import styles from "./TourDetails.module.css"
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { TourType } from '../../components/Filters/types';
 
 const TourDetails = () => {
+  const { id } = useParams<{ id: string }>();
+  const [tour, setTour] = useState<TourType | null>(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/tours/${id}`)
+      .then(response => response.json())
+      .then(data => setTour(data))
+      .catch(error => console.error('Erro ao buscar detalhes do tour:', error));
+  }, [id]);
+
+  if (!tour) return <p>Carregando...</p>;
+
   return (
     <div>
       <Header />
         <div className={styles.body}>
           <div className={styles.main}>
             <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/vernazza.jpg" alt="static-tour" style={{width: '100%'}} />
-            <TourInfo />
+            <TourInfo tour={tour} />
           </div>
           <div className={styles.aside}>
             <BookTour />

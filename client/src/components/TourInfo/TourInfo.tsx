@@ -4,30 +4,34 @@ import { GrLocation } from "react-icons/gr"
 import styles from "./TourInfo.module.css"
 import { TiStarFullOutline } from "react-icons/ti"
 import AddReview from "../AddReview/AddReview"
+import { TourType } from "../Filters/types"
 
-const TourInfo = () => {
-  return (
-    <div className={styles.body}>
-        <div style={{display: 'flex', paddingTop: '1rem', justifyContent: 'space-between'}}>
-            <div style={{display: 'flex', gap: '0.5rem'}}>
-                <GrLocation size={24} />
-                <span style={{display: 'flex', gap: '1rem'}}><p>Budapest, Hungary</p><p style={{color: '#EB565A'}}>View on map</p></span>
-            </div>
-            <div style={{display: 'flex', gap: '1rem'}}>
-                <FiShare2 size={22} />
-                <FaRegHeart size={22} />
-            </div>
+const TourInfo = ({ tour }: { tour: TourType }) => {
+    return (
+      <div className={styles.body}>
+        <div style={{ display: 'flex', paddingTop: '1rem', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <GrLocation size={24} />
+            <span style={{ display: 'flex', gap: '1rem' }}>
+              <p>{tour.city}, {tour.country}</p>
+              <p style={{ color: '#FC5056' }}>View on map</p>
+            </span>
+          </div>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <FiShare2 size={22} />
+            <FaRegHeart size={22} />
+          </div>
         </div>
-        <p style={{fontSize: '32px', fontWeight: 'bold'}}>Wonders of the West Coast & Kimberly</p>
+        <p style={{ fontSize: '32px', fontWeight: 'bold' }}>{tour.name}</p>
         <span style={{height: '1px', background: 'black', width: '100%', opacity: '0.2'}}></span>
         <div className={styles.info}>
             <div className={styles.infoBox}>
                 <span>From</span>
-                <p style={{color: '#dd464b'}}>$104</p>
+                <p style={{color: '#dd464b'}}>${tour.price}</p>
             </div>
             <div>
                 <span>Duration</span>
-                <p>7 days</p>
+                <p>{tour.duration} days</p>
             </div>
             <div>
                 <span>Max People</span>
