@@ -27,3 +27,13 @@ export interface Review {
     amenities: number;
     comfort: number;
   }
+
+  export interface Rating {
+    services: number | null;
+    price: number | null;
+    location: number | null;
+    food: number | null;
+    amenities: number | null;
+    comfort: number | null;
+  }
+  

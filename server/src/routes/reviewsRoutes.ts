@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addReview, removeReview, modifyReview, getCountByReviewHandler } from '../controllers/reviewsController';
+import { addReview, removeReview, modifyReview, getCountByReviewHandler, getUserAvgRatingsHandler } from '../controllers/reviewsController';
 import db from '../database/db';
 
 const router = Router();
@@ -17,5 +17,6 @@ router.get('/', (req, res) => {
 router.delete('/:id', removeReview);
 router.put('/:id', modifyReview);
 router.get('/countByReview', getCountByReviewHandler);
+router.get('/average/:idTour/:user_email', getUserAvgRatingsHandler);
 
 export default router;

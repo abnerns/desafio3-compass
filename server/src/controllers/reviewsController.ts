@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { insertReview, deleteReview, updateReview, getCountByReview } from '../models/reviewModel';
+import { insertReview, deleteReview, updateReview, getCountByReview, getUserAvgRatings } from '../models/reviewModel';
 import { Review } from '../types';
 
 export const addReview = (req: Request, res: Response) => {
@@ -26,3 +26,11 @@ export const getCountByReviewHandler = (req: Request, res: Response) => {
         res.status(200).json(result);
     });
 };
+
+export const getUserAvgRatingsHandler = (req: Request, res: Response) => {
+    const { idTour, user_email } = req.params;
+    getUserAvgRatings(Number(idTour), user_email, (avgRatings) => {
+      res.status(200).json(avgRatings);
+    });
+  };
+  

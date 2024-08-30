@@ -1,5 +1,5 @@
 import db from '../database/db';
-import { Review } from '../types';
+import { Rating, Review } from '../types';
 
 export const createReviewTable = () => {
   db.run(
@@ -109,4 +109,26 @@ export const getCountByReview = (callback: (res: { idTour: number, count: number
           }
       }
   );
+};
+
+export const getUserAvgRatings = (idTour: number, user_email: string, callback: (avgRatings: Rating) => void): void => {
+  const query = `
+    SELECT 
+      AVG(services) AS services,
+      AVG(price) AS price,
+      AVG(location) AS location,
+      AVG(food) AS food,
+      AVG(amenities) AS amenities,
+      AVG(comfort) AS comfort
+    FROM reviews
+    WHERE idTour = ? AND user_email = ?
+  `;
+  db.get(query, [idTour, user_email], (err: Error | null, row: Rating) => {
+    if (err) {
+      console.error(err.message);
+      callback({ services: 0, price: 0, location: 0, food: 0, amenities: 0, comfort: 0 });
+    } else {
+      callback(row);
+    }
+  });
 };
