@@ -35,15 +35,15 @@ const TourInfo = ({ tour }: { tour: TourType }) => {
             </div>
             <div>
                 <span>Max People</span>
-                <p>25</p>
+                <p>{tour.maxPeople}</p>
             </div>
             <div>
                 <span>Min Age</span>
-                <p>12+</p>
+                <p>{tour.minAge}+</p>
             </div>
             <div>
                 <span>Tour Type</span>
-                <p>Adventure</p>
+                <p>{tour.categoryName}</p>
             </div>
             <div>
                 <span>Reviews</span>

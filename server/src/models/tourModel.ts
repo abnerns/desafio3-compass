@@ -8,11 +8,12 @@ export const createTourTable = () => {
       name TEXT,
       city TEXT,
       country TEXT,
-      date_start TEXT,
-      date_end TEXT,
-      avgReview INTEGER,
-      duration TEXT,
       price INTEGER,
+      date_start TEXT,
+      maxPeople INTEGER,
+      minAge INTEGER,
+      avgReview INTEGER,
+      duration INTEGER,
       idCateg INTEGER,
       FOREIGN KEY (idCateg) REFERENCES categories(id)
     )`,
@@ -89,7 +90,10 @@ export const getTotalTour = (callback: (count: number) => void): void => {
   };
 
   export const getTourById = (id: number, callback: (res: Tour | null) => void): void => {
-    db.get("SELECT * FROM tours WHERE id = ?", [id], (err: Error | null, res: Tour) => {
+    db.get(`SELECT tours.*, categories.name AS categoryName
+      FROM tours
+      LEFT JOIN categories ON tours.idCateg = categories.id
+      WHERE tours.id = ?`, [id], (err: Error | null, res: Tour) => {
       if (err) {
         console.error(err.message);
       } else {
