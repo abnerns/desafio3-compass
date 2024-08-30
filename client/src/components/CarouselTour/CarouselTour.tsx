@@ -4,10 +4,12 @@ import Tour from "../Tour/Tour";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useNavigate } from "react-router-dom";
 
 const CarouselTour = () => {
     const [tours, setTours] = useState<TourTypes[]>([]);
     const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
+    const navigate = useNavigate();
     
     const settings = {
       dots: true,
@@ -43,9 +45,11 @@ const CarouselTour = () => {
   return (
     <div style={{width: '76.8vw'}}> 
       <Slider {...settings}>
-        {tours.map((tour) => (
-          <Tour key={tour.id} tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
-        ))}
+      {tours.map((tour) => (
+        <div key={tour.id} onClick={() => navigate(`/tour-details/${tour.id}`)}>
+          <Tour  tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
+        </div>
+      ))}
       </Slider>
     </div>
   )
