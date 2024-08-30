@@ -15,6 +15,7 @@ export const createReviewTable = () => {
       food INTEGER,  
       amenities INTEGER,
       comfort INTEGER,
+      created_at TEXT DEFAULT (datetime('now','localtime')),
       FOREIGN KEY (idTour) REFERENCES tours(id)
     )`,
     (err: Error | null) => {

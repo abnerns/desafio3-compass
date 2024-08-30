@@ -2,9 +2,17 @@ import { FaStar } from "react-icons/fa";
 import styles from "./Stars.module.css";
 import { useState } from "react";
 
-const Stars = () => {
-  const [rating, setRating] = useState<number | null>(null);
+interface StarsProps {
+  rating: number;
+  onRatingChange: (rating: number) => void;
+}
+
+const Stars: React.FC<StarsProps> = ({ rating, onRatingChange }) => {
   const [hover, setHover] = useState<number | null>(null);
+
+  const handleClick = (currentRating: number) => {
+    onRatingChange(currentRating);
+  };
 
   return (
     <div>
@@ -16,7 +24,8 @@ const Stars = () => {
               type="radio"
               name="rating"
               value={currentRating}
-              onClick={() => setRating(currentRating)}
+              onClick={() => handleClick(currentRating)}
+              style={{ display: "none" }} // esconder o input de radio
             />
             <FaStar
               className={styles.star}
