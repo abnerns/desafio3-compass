@@ -6,6 +6,7 @@ import categoryRoutes from './routes/categoriesRoutes';
 import { createCategoryTable } from './models/categoryModel';
 import { createReviewTable } from './models/reviewModel';
 import { createTourTable } from './models/tourModel';
+import { createAvgReviewTable } from './models/avgReviews';
 
 const app: Application = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use(cors());
 createCategoryTable();
 createTourTable();
 createReviewTable();
+createAvgReviewTable();
 
 app.use('/tours', tourRoutes);
 app.use('/reviews', reviewRoutes);

@@ -17,7 +17,7 @@ useEffect(() => {
       const ratingsData: { [key: string]: Rating } = {};
       await Promise.all(
         filteredReviews.map(async (review) => {
-          const response = await fetch(`http://localhost:8000/reviews/average/${tourId}/${review.user_email}`);
+          const response = await fetch(`http://localhost:8000/reviews/rating/${tourId}/${review.user_email}`);
           const data = await response.json();
           ratingsData[review.user_email] = data;
         })

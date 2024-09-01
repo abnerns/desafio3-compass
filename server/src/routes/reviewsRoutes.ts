@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addReview, removeReview, modifyReview, getCountByReviewHandler, getUserAvgRatingsHandler } from '../controllers/reviewsController';
+import { addReview, removeReview, modifyReview, getCountByReviewHandler, getUserRatingsHandler } from '../controllers/reviewsController';
 import db from '../database/db';
 
 const router = Router();
@@ -17,6 +17,16 @@ router.get('/', (req, res) => {
 router.delete('/:id', removeReview);
 router.put('/:id', modifyReview);
 router.get('/countByReview', getCountByReviewHandler);
-router.get('/average/:idTour/:user_email', getUserAvgRatingsHandler);
+router.get('/rating/:idTour/:user_email', getUserRatingsHandler);
+router.get('/avgReviews/:idTour', (req, res) => {
+  const { idTour } = req.params;
+  db.get('SELECT * FROM avgReviews WHERE idTour = ?', [idTour], (err, row) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(row);
+    }
+  });
+});
 
 export default router;
