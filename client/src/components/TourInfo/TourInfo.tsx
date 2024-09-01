@@ -5,8 +5,36 @@ import styles from "./TourInfo.module.css"
 import { TiStarFullOutline } from "react-icons/ti"
 import AddReview from "../AddReview/AddReview"
 import { TourType } from "../Filters/types"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
-const TourInfo = ({ tour }: { tour: TourType }) => {
+const TourInfo = ({ tour, reviews }: { tour: TourType }) => {
+  const { id: tourId } = useParams<{ id: string }>();
+  const [avgRatings, setAvgRatings] = useState({
+    services: 0,
+    price: 0,
+    location: 0,
+    food: 0,
+    amenities: 0,
+    comfort: 0
+  });
+  const filteredReviews = reviews.filter((review) => review.idTour === Number(tourId));
+
+  useEffect(() => {
+    if (tourId) {
+      fetch(`http://localhost:8000/reviews/avgReviews/${tourId}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log("Received data:", data);
+          setAvgRatings(data);
+        })
+        .catch(error => console.error("Erro ao buscar média dos reviews:", error));
+    }
+  }, [tourId]);
+
+  const globalAverage = ((avgRatings.services + avgRatings.price + avgRatings.location + avgRatings.food + avgRatings.amenities + avgRatings.comfort) / 6).toFixed(1);
+
+
     return (
       <div className={styles.body}>
         <div style={{ display: 'flex', paddingTop: '1rem', justifyContent: 'space-between' }}>
@@ -47,7 +75,7 @@ const TourInfo = ({ tour }: { tour: TourType }) => {
             </div>
             <div>
                 <span>Reviews</span>
-                <div style={{display: 'flex', gap: '0.2rem', alignItems: 'center'}}><TiStarFullOutline color="#dd464b" /><p style={{display: 'flex', gap: '0.2rem'}}>4.8<span style={{fontWeight: 'normal' }}>(15 reviews)</span></p></div>
+                <div style={{display: 'flex', gap: '0.2rem', alignItems: 'center'}}><TiStarFullOutline color="#dd464b" /><p style={{display: 'flex', gap: '0.2rem'}}>{globalAverage}<span style={{fontWeight: 'normal' }}>({filteredReviews.length} reviews)</span></p></div>
             </div>
         </div>
         <div>

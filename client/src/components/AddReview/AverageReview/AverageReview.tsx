@@ -37,12 +37,12 @@ const AverageReview = () => {
                 <span style={{display: 'flex', alignItems: 'center', gap: '0.4rem'}}><FaStar color="white" /><p style={{margin: '0'}}>Excellent</p></span>
             </div>
             <div className={styles.reviewBox}>
-                <div><p>Services</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.services}</p></span></div>
-                <div><p>Prices</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.price}</p></span></div>
-                <div><p>Locations</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.location}</p></span></div>
-                <div><p>Food</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.food}</p></span></div>
-                <div><p>Amenities</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.amenities}</p></span></div>
-                <div><p>Room comfort and quality</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.comfort}</p></span></div>
+                <div><p>Services</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.services.toFixed(1)}</p></span></div>
+                <div><p>Prices</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.price.toFixed(1)}</p></span></div>
+                <div><p>Locations</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.location.toFixed(1)}</p></span></div>
+                <div><p>Food</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.food.toFixed(1)}</p></span></div>
+                <div><p>Amenities</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.amenities.toFixed(1)}</p></span></div>
+                <div><p>Room comfort and quality</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.comfort.toFixed(1)}</p></span></div>
             </div>
         </div>
     </div>
