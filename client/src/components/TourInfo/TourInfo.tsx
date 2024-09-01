@@ -7,6 +7,8 @@ import AddReview from "../AddReview/AddReview"
 import { TourType } from "../Filters/types"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import Map from "../Map/Map"
+
 
 const TourInfo = ({ tour, reviews }: { tour: TourType }) => {
   const { id: tourId } = useParams<{ id: string }>();
@@ -84,6 +86,7 @@ const TourInfo = ({ tour, reviews }: { tour: TourType }) => {
         </div>
         <div>
             <p className={styles.title}>Map</p>
+            <Map city={tour.city} country={tour.country} />
         </div>
         <div>
             <p className={styles.title}>Average Reviews</p>
