@@ -18,12 +18,18 @@
     width: 346px;
     height: 56px;
     border-radius: 8px;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .textarea {
     width: 710px;
     height: 121px;
-    resize: none;
+    resize: none;    
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .button{

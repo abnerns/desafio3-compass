@@ -64,11 +64,13 @@
     gap: 0.75rem;
 }
 
+.userOn button{
+    margin-top: 0.2rem;
+    opacity: 0.6;
+}
+
 .userOn button:hover{
-    background-color: #e6e8ee;
-    border-radius: 10px;
-    transition: 0.3s;
-    padding: 0.3rem;
+    opacity: 1;
 }
 
 .userOn p{
@@ -104,9 +106,9 @@
 
 .cursor{
     cursor: pointer;
+    opacity: 0.7;
 }
 
 .cursor:hover{
-    background-color: #e6e8ee;
-    border-radius: 50%;
+    opacity: 1;
 }

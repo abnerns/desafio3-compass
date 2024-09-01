@@ -111,7 +111,8 @@
     justify-content: center;
 }
 
-.icon:hover{
+.icon:hover .heartIcon{
     cursor: pointer;
-    background-color: rgb(209, 209, 209);
+    color: red;
+    fill: red;
 }

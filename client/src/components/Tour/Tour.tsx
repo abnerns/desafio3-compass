@@ -5,18 +5,13 @@ import styles from "./Tour.module.css";
 import { TourProps } from "./types";
 
 const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
-  const [like, setLike] = useState(false);
-
-  const handleLike = () => {
-    setLike(!like);
-  };
 
   return (
     <div className={styles.container}>
         <div className={styles.imgWrapper}>
             <img className={styles.img} alt={tour.name} src="https://3challenge-compass.s3.us-east-2.amazonaws.com/rocky.jpeg" />
-            <button className={styles.icon} onClick={handleLike}>
-            <Heart size={12} color={like ? "red" : "black"} fill={like ? "red" : "none"} />
+            <button className={styles.icon}>
+              <Heart size={12} className={styles.heartIcon} />
             </button>
         </div>
         <div className={styles.infoBox}>
