@@ -56,3 +56,34 @@
     gap: 2.5rem;
     margin-top: 2rem;
 }
+
+.pagination{
+    display: flex;
+    align-self: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.pagBtn{
+    border-radius: 50%;
+    border: 1px solid #A9AFBB;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.pagBtn.active {
+    background-color: #FC5056;
+    color: #fff;
+    border: none;
+  }
+
+  .pagBtn.active:hover {
+    color: #fff !important;
+  }
+
+
+.pagBtn:hover{
+    border: 1px solid #FC5056;
+    color: #FC5056;
+}

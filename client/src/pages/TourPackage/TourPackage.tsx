@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import styles from "./TourPackage.module.css";
 import { Form } from "react-bootstrap";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { TourType } from "../../components/Filters/types";
 import Tour from "../../components/Tour/Tour";
@@ -19,6 +19,9 @@ const TourPackage = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [totalTour, setTotalTour] = useState(0);
   const navigate = useNavigate();
+
+  const currentPage = Math.floor(offset / limit) + 1;
+  const totalPages = Math.ceil(totalTour / limit);
 
   useEffect(() => {
     const url = new URL("http://localhost:8000/tours");
@@ -36,7 +39,7 @@ const TourPackage = () => {
       })
       .catch((error) => console.error("Erro ao buscar dados.", error));
 
-      fetch("http://localhost:8000/reviews/countByReview")
+    fetch("http://localhost:8000/reviews/countByReview")
       .then((response) => response.json())
       .then((data) => {
         const counts: { [key: number]: number } = {};
@@ -47,7 +50,7 @@ const TourPackage = () => {
       })
       .catch((error) => console.error("Erro ao buscar contagem de reviews:", error));
 
-      fetch("http://localhost:8000/tours/total")
+    fetch("http://localhost:8000/tours/total")
       .then((response) => response.json())
       .then((data) => {
         setTotalTour(data.count);
@@ -55,31 +58,17 @@ const TourPackage = () => {
       .catch((error) => console.error("Erro ao buscar contagem total de tours:", error));
   }, [limit, offset, selectedCategory]);
 
-
+  const handlePageClick = (pageNumber: number) => {
+    setOffset((pageNumber - 1) * limit);
+  };
 
   return (
     <div>
       <Header />
       <div className={styles.body}>
         <div className={styles.homeHeader}>
-          <p
-            style={{
-              fontFamily: "Work Sans",
-              fontWeight: "bold",
-              fontSize: "56px",
-              margin: "0",
-            }}
-          >
-            Tour Package
-          </p>
-          <span
-            style={{
-              fontWeight: "500",
-              display: "flex",
-              gap: "0.5rem",
-              fontSize: "18px",
-            }}
-          >
+          <p style={{fontFamily: "Work Sans",fontWeight: "bold",fontSize: "56px", margin: "0",}}>Tour Package</p>
+          <span style={{fontWeight: "500", display: "flex", gap: "0.5rem", fontSize: "18px"}}>
             <p>Home /</p>
             <p style={{ color: "#FC5056" }}>Tour Package</p>
           </span>
@@ -88,31 +77,14 @@ const TourPackage = () => {
         <div className={styles.main}>
           <Filters onCategoryChange={setSelectedCategory} />
           <div className={styles.packages}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <p style={{ margin: "0" }}>{totalTour} Tours</p>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.7rem",
-                  opacity: "0.7",
-                }}
-              >
+              <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", opacity: "0.7" }}>
                 <p style={{ margin: "0" }}>Sort by</p>
                 <FaSortAlphaDown size={22} />
                 <Form className="d-flex align-items-center">
                   <div className={styles.input}>
-                    <input
-                      type="title"
-                      placeholder="Title"
-                      style={{ backgroundColor: "#F7F8FA" }}
-                    ></input>
+                    <input type="title" placeholder="Title" style={{ backgroundColor: "#F7F8FA" }}></input>
                     <FaAngleDown size={24} />
                   </div>
                 </Form>
@@ -126,8 +98,20 @@ const TourPackage = () => {
               ))}
             </div>
             <div className={styles.pagination}>
-              <button onClick={() => setOffset(Math.max(0, offset - limit))} disabled={offset === 0}>Anterior</button>
-              <button onClick={() => setOffset(offset + limit)} disabled={tours.length < limit}>Próximo</button>
+              <button className={styles.pagBtn} onClick={() => setOffset(Math.max(0, offset - limit))} disabled={offset === 0}>
+                <FaAngleLeft />
+              </button>
+              {[...Array(totalPages)].map((_, index) => {
+                const pageNumber = index + 1;
+                return (
+                  <button key={pageNumber} className={`${styles.pagBtn} ${currentPage === pageNumber ? styles.active : ""}`} onClick={() => handlePageClick(pageNumber)}>
+                    {pageNumber}
+                  </button>
+                );
+              })}
+              <button className={styles.pagBtn} onClick={() => setOffset(offset + limit)} disabled={tours.length < limit}>
+                <FaAngleRight />
+              </button>
             </div>
           </div>
         </div>
