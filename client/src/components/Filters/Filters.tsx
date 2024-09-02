@@ -6,7 +6,7 @@ import { CiSearch } from "react-icons/ci";
 import NavButton from "../NavButton/NavButton";
 import { Categ, Destination } from "./types";
 
-const Filters = ({ onCategoryChange, onReviewFilterChange }: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void }) => {
+const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange }: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void, onDestinationChange: (id: number | null) => void }) => {
   const [priceFilter, setPriceFilter] = useState<number>(150);
   const [categories, setCategories] = useState<Categ[]>([]);
   const [destinations, setDestinations] = useState<{ [key: string]: Destination[] }>({
@@ -51,6 +51,10 @@ const Filters = ({ onCategoryChange, onReviewFilterChange }: { onCategoryChange:
     } else {
       onReviewFilterChange(null);
     }
+  };
+
+  const handleDestinationChange = (idDestination: number) => {
+    onDestinationChange(idDestination);
   };
 
   return (
@@ -98,7 +102,7 @@ const Filters = ({ onCategoryChange, onReviewFilterChange }: { onCategoryChange:
                     <p className={styles.subtitle}>{continent}</p>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       {dests.map((destination) => (
-                        <Form.Check type="checkbox" label={destination.name} key={destination.id} />
+                        <Form.Check type="checkbox" label={destination.name} key={destination.id} onClick={() => handleDestinationChange(destination.id)} />
                       ))}
                     </Form.Group>
                   </div>
