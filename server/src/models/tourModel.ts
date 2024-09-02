@@ -108,18 +108,25 @@ export const getTotalTour = (callback: (count: number) => void): void => {
   };
 
   export const getTourById = (id: number, callback: (res: Tour | null) => void): void => {
-    db.get(`SELECT tours.*, categories.name AS categoryName
+    db.get(
+      `SELECT 
+        tours.*, 
+        categories.name AS categoryName,
+        destination.name AS destinationName
       FROM tours
       LEFT JOIN categories ON tours.idCateg = categories.id
-      WHERE tours.id = ?`, [id], (err: Error | null, res: Tour) => {
-      if (err) {
-        console.error(err.message);
-      } else {
-        callback(res);
+      LEFT JOIN destination ON tours.idDestination = destination.id
+      WHERE tours.id = ?`,
+      [id],
+      (err: Error | null, res: Tour) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          callback(res);
+        }
       }
-    });
+    );
   };
-
   export const searchToursByReview = (minAvgReview: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
     db.all(
       `SELECT 

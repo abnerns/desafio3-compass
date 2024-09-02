@@ -5,10 +5,11 @@ import { Review } from '../types';
 
 export const addReview = (req: Request, res: Response) => {
     const review: Review = req.body;
-    insertReview(review);
-    updateAvgReview(review.idTour);
-    res.status(200).send("Dados criados com sucesso.");
-};
+    insertReview(review, () => {
+      updateAvgReview(review.idTour);
+      res.status(200).send("Dados criados com sucesso.");
+    });
+  };
 
 export const removeReview = (req: Request, res: Response) => {
     const { id } = req.params;

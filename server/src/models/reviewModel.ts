@@ -26,7 +26,7 @@ export const createReviewTable = () => {
   );
 };
 
-export const insertReview = (review: Review) => {
+export const insertReview = (review: Review, callback: () => void) => {
   const insertData = db.prepare(
     `INSERT INTO reviews (idTour, user_name, user_email, message, services, price, location, food, amenities, comfort)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -47,7 +47,8 @@ export const insertReview = (review: Review) => {
     review.location,
     review.food,
     review.amenities,
-    review.comfort
+    review.comfort,
+    callback
   );
 };
 
