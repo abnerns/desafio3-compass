@@ -7,6 +7,7 @@ import { createCategoryTable } from './models/categoryModel';
 import { createReviewTable } from './models/reviewModel';
 import { createTourTable } from './models/tourModel';
 import { createAvgReviewTable } from './models/avgReviews';
+import { createDestinationTable } from './models/destinationModel';
 
 const app: Application = express();
 app.use(express.json());
@@ -17,6 +18,7 @@ createCategoryTable();
 createTourTable();
 createReviewTable();
 createAvgReviewTable();
+createDestinationTable();
 
 app.use('/tours', tourRoutes);
 app.use('/reviews', reviewRoutes);
