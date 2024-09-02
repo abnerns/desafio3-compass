@@ -1,6 +1,5 @@
 import { Star } from "lucide-react";
 import { Heart } from "lucide-react";
-import { useState } from "react";
 import styles from "./Tour.module.css";
 import { TourProps } from "./types";
 
@@ -23,7 +22,7 @@ const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
             <div className={styles.review}>
                 <span className={styles.star}>
                 <Star size={12} fill="white" />
-                <span>{tour.avgReview}</span>
+                <span>{tour.avgReview.toFixed(1)}</span>
                 </span>
                 <p>{reviewCount}+ reviews</p>
             </div>

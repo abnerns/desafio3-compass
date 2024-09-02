@@ -12,7 +12,6 @@ export const createTourTable = () => {
       date_start TEXT,
       maxPeople INTEGER,
       minAge INTEGER,
-      avgReview INTEGER,
       duration INTEGER,
       idCateg INTEGER,
       FOREIGN KEY (idCateg) REFERENCES categories(id)
@@ -27,15 +26,23 @@ export const createTourTable = () => {
 
 export const searchTours = (limit: number, offset: number, callback: (res: Tour[]) => void): void => {
   db.all(
-      "SELECT * FROM tours LIMIT ? OFFSET ?",
-      [limit, offset],
-      (err: Error | null, res: Tour[]) => {
-          if (err) {
-              console.error(err.message);
-          } else {
-              callback(res);
-          }
+    `SELECT 
+      tours.*, 
+      COALESCE((
+        (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
+      ), 0) as avgReview
+    FROM tours
+    JOIN avgReviews ON tours.id = avgReviews.idTour
+    GROUP BY tours.id
+    LIMIT ? OFFSET ?`,
+    [limit, offset],
+    (err: Error | null, res: Tour[]) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        callback(res);
       }
+    }
   );
 };
 
