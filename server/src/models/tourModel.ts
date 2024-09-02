@@ -52,10 +52,12 @@ export const searchToursByCategory = (idCateg: number, limit: number, offset: nu
   db.all(
     `SELECT 
       tours.*, 
+      destination.name as destinationName,
       COALESCE((
         (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
       ), 0) as avgReview
     FROM tours
+    LEFT JOIN destination ON tours.idDestination = destination.id
     LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
     WHERE tours.idCateg = ?
     GROUP BY tours.id
@@ -160,11 +162,13 @@ export const getTotalTour = (callback: (count: number) => void): void => {
   export const searchToursByReview = (minAvgReview: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
     db.all(
       `SELECT 
-        tours.*, 
+        tours.*,
+        destination.name as destinationName,
         COALESCE((
           (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
         ), 0) as avgReview
       FROM tours
+      LEFT JOIN destination ON tours.idDestination = destination.id
       LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
       GROUP BY tours.id
       HAVING avgReview >= ?
