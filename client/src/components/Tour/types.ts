@@ -6,9 +6,10 @@ export interface TourTypes {
     review: string;
     price: number;
     duration: string;
-    avgReview: number;
     date_start: string;
-    date_end: string;
+    avgReview: number;
+    minAge: number;
+    maxPeople: number;
 }
 
 export interface TourProps {

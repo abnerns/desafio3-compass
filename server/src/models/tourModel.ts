@@ -48,7 +48,16 @@ export const searchTours = (limit: number, offset: number, callback: (res: Tour[
 
 export const searchToursByCategory = (idCateg: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
   db.all(
-    "SELECT * FROM tours WHERE idCateg = ? LIMIT ? OFFSET ?",
+    `SELECT 
+      tours.*, 
+      COALESCE((
+        (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
+      ), 0) as avgReview
+    FROM tours
+    JOIN avgReviews ON tours.id = avgReviews.idTour
+    WHERE tours.idCateg = ?
+    GROUP BY tours.id
+    LIMIT ? OFFSET ?`,
     [idCateg, limit, offset],
     (err: Error | null, res: Tour[]) => {
       if (err) {

@@ -4,6 +4,7 @@ import styles from "./Tour.module.css";
 import { TourProps } from "./types";
 
 const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
+  const avgReviewShow = tour.avgReview !== undefined ? tour.avgReview.toFixed(1) : "";
 
   return (
     <div className={styles.container}>
@@ -22,7 +23,7 @@ const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
             <div className={styles.review}>
                 <span className={styles.star}>
                 <Star size={12} fill="white" />
-                <span>{tour.avgReview.toFixed(1)}</span>
+                <span>{avgReviewShow}</span>
                 </span>
                 <p>{reviewCount}+ reviews</p>
             </div>
