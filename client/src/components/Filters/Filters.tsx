@@ -6,8 +6,8 @@ import { CiSearch } from "react-icons/ci";
 import NavButton from "../NavButton/NavButton";
 import { Categ, Destination } from "./types";
 
-const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange }: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void, onDestinationChange: (id: number | null) => void }) => {
-  const [priceFilter, setPriceFilter] = useState<number>(150);
+const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, onPriceFilterChange }: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void, onDestinationChange: (id: number | null) => void, onPriceFilterChange : (minPrice: number | null) => void }) => {
+  const [priceFilter, setPriceFilter] = useState<number>(0);
   const [categories, setCategories] = useState<Categ[]>([]);
   const [destinations, setDestinations] = useState<{ [key: string]: Destination[] }>({
     Africa: [],
@@ -40,8 +40,12 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange }
       .catch((error) => console.error("Erro ao buscar dados.", error));
   }, []);
 
-  const handleCategoryChange = (idCateg: number) => {
-    onCategoryChange(idCateg);
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>, idCateg: number) => {
+    if (event.target.checked) {
+      onCategoryChange(idCateg);
+    } else {
+      onCategoryChange(null);
+    }
   };
 
   const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,8 +57,16 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange }
     }
   };
 
-  const handleDestinationChange = (idDestination: number) => {
-    onDestinationChange(idDestination);
+  const handleDestinationChange = (event: React.ChangeEvent<HTMLInputElement>, idDestination: number) => {
+    if (event.target.checked) {
+      onDestinationChange(idDestination);
+    } else {
+      onDestinationChange(null);
+    }
+  };
+
+  const handlePriceChange = () => {
+    onPriceFilterChange(priceFilter);
   };
 
   return (
@@ -85,13 +97,13 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange }
                     <span style={{fontWeight: 'bold'}}>${priceFilter.toFixed(2)}</span>
                   </div>
                 </div>
-                <NavButton value="Submit" />
+                <button onClick={handlePriceChange} className={styles.btn}>Submit</button>
               </Container>
               <Container className={styles.container}>
                 <p className={styles.title}>Categories</p>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   {categories.map((category) => (
-                      <Form.Check type="checkbox" label={category.name} key={category.id} onChange={() => handleCategoryChange(category.id)}  />
+                      <Form.Check type="checkbox" label={category.name} key={category.id} onChange={(e) => handleCategoryChange(e, category.id)}  />
                   ))}
                 </Form.Group>
               </Container>
@@ -102,7 +114,7 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange }
                     <p className={styles.subtitle}>{continent}</p>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       {dests.map((destination) => (
-                        <Form.Check type="checkbox" label={destination.name} key={destination.id} onClick={() => handleDestinationChange(destination.id)} />
+                        <Form.Check type="checkbox" label={destination.name} key={destination.id} onChange={(e) => handleDestinationChange(e, destination.id)} />
                       ))}
                     </Form.Group>
                   </div>

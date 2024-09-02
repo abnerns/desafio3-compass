@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour, getTourById, searchToursByReview, searchToursByDestination } from '../models/tourModel';
+import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour, getTourById, searchToursByReview, searchToursByDestination, searchToursByPrice } from '../models/tourModel';
 import { searchDestinations } from '../models/destinationModel';
 
 export const getTours = (req: Request, res: Response) => {
-  const { limit = 9, offset = 0, idCateg, minAvgReview, idDestination } = req.query;
+  const { limit = 9, offset = 0, idCateg, minAvgReview, idDestination, minPrice } = req.query;
 
   if (idDestination) {
     searchToursByDestination(parseInt(idDestination as string), parseInt(limit as string), parseInt(offset as string), (result) => {
@@ -15,6 +15,10 @@ export const getTours = (req: Request, res: Response) => {
     });
   } else if (idCateg) {
     searchToursByCategory(parseInt(idCateg as string), parseInt(limit as string), parseInt(offset as string), (result) => {
+      res.status(200).json(result);
+    });
+  } else if (minPrice) {
+    searchToursByPrice(parseInt(minPrice as string), parseInt(limit as string), parseInt(offset as string), (result) => {
       res.status(200).json(result);
     });
   } else {
