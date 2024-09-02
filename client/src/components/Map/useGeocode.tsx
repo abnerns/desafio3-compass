@@ -7,7 +7,7 @@ const useGeocode = (city: string, country: string) => {
     const fetchCoordinates = async () => {
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?city=${city}&country=${country}&format=json`
+          `https://nominatim.openstreetmap.org/search?city=${city}&format=json`
         );
         const data = await response.json();
 

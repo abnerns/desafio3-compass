@@ -7,14 +7,15 @@ export const createTourTable = () => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
       city TEXT,
-      country TEXT,
+      idDestination INTEGER,
       price INTEGER,
       date_start TEXT,
       maxPeople INTEGER,
       minAge INTEGER,
       duration INTEGER,
       idCateg INTEGER,
-      FOREIGN KEY (idCateg) REFERENCES categories(id)
+      FOREIGN KEY (idCateg) REFERENCES categories(id),
+      FOREIGN KEY (idDestination) REFERENCES destination(id)
     )`,
     (err: Error | null) => {
       if (err) {
@@ -28,11 +29,13 @@ export const searchTours = (limit: number, offset: number, callback: (res: Tour[
   db.all(
     `SELECT 
       tours.*, 
+      destination.name as destinationName,
       COALESCE((
         (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
       ), 0) as avgReview
     FROM tours
-    JOIN avgReviews ON tours.id = avgReviews.idTour
+    LEFT JOIN destination ON tours.idDestination = destination.id
+    LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
     GROUP BY tours.id
     LIMIT ? OFFSET ?`,
     [limit, offset],
@@ -45,7 +48,6 @@ export const searchTours = (limit: number, offset: number, callback: (res: Tour[
     }
   );
 };
-
 export const searchToursByCategory = (idCateg: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
   db.all(
     `SELECT 
@@ -54,7 +56,7 @@ export const searchToursByCategory = (idCateg: number, limit: number, offset: nu
         (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
       ), 0) as avgReview
     FROM tours
-    JOIN avgReviews ON tours.id = avgReviews.idTour
+    LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
     WHERE tours.idCateg = ?
     GROUP BY tours.id
     LIMIT ? OFFSET ?`,
@@ -126,7 +128,7 @@ export const getTotalTour = (callback: (count: number) => void): void => {
           (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
         ), 0) as avgReview
       FROM tours
-      JOIN avgReviews ON tours.id = avgReviews.idTour
+      LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
       GROUP BY tours.id
       HAVING avgReview >= ?
       LIMIT ? OFFSET ?`,

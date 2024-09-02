@@ -16,7 +16,7 @@ const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
         </div>
         <div className={styles.infoBox}>
             <p>
-            {tour.city}, {tour.country}
+            {tour.city}, {tour.destinationName}
             </p>
             <h3 style={{ width: "15vw", fontSize: "18px", fontWeight: "bold" }}>{tour.name}</h3>
             <div className={styles.bottom}>

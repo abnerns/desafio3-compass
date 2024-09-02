@@ -16,7 +16,7 @@ const Map = ({ city, country }: { city: string, country: string }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={coordinates}>
-        <Popup>{city}, {country}</Popup>
+        <Popup>{city}</Popup>
       </Marker>
     </MapContainer>
   );

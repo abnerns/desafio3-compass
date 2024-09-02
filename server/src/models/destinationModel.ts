@@ -5,8 +5,7 @@ export const createDestinationTable = () => {
     db.run(
       `CREATE TABLE IF NOT EXISTS destination (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        continent TEXT
+        name TEXT
       )`,
       (err: Error | null) => {
         if (err) {
