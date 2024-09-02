@@ -1,6 +1,12 @@
 import styles from "./TourDestination.module.css"
 
-const TourDestination = () => {
+interface TourDestinationProps {
+  name: string;
+}
+
+
+
+const TourDestination: React.FC<TourDestinationProps> = ({ name }) => {
     return (
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
         <div className={styles.tour} />
@@ -14,7 +20,7 @@ const TourDestination = () => {
         >
           <p style={{ fontFamily: 'Work Sans', margin: 0 }}>174,688 Travelers</p>
           <p style={{ fontFamily: 'Kaushan Script', fontSize: '20px' }}>
-            United Kingdom
+            {name}
           </p>
         </div>
       </div>

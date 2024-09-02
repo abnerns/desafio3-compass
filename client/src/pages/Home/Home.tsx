@@ -8,8 +8,53 @@ import styles from "./Home.module.css";
 import { RiDoubleQuotesR } from "react-icons/ri";
 import { VscPlayCircle } from "react-icons/vsc";
 import TourDestination from "../../components/TourDestination/TourDestination";
+import { useEffect, useState } from "react";
+
+interface Destination {
+  id: number;
+  name: string;
+}
 
 function Home() {
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/tours/destination")
+      .then((response) => response.json())
+      .then((data) => setDestinations(data))
+      .catch((error) => console.error('Error fetching destinations:', error));
+  }, []);
+
+  const getGridStyles = (index: number) => {
+    const baseStyles: React.CSSProperties = { gridColumn: '', gridRow: '' };
+    
+    switch (index) {
+      case 0:
+        baseStyles.gridColumn = '1 / 4';
+        break;
+      case 1:
+        baseStyles.gridColumn = '4 / 7';
+        break;
+      case 2:
+        baseStyles.gridColumn = '7 / 10';
+        break;
+      case 3:
+        baseStyles.gridColumn = '10 / 13';
+        baseStyles.gridRow = 'span 2';
+        break;
+      case 4:
+        baseStyles.gridColumn = '1 / 5';
+        break;
+      case 5:
+        baseStyles.gridColumn = '5 / 10';
+        break;
+      default:
+        baseStyles.gridColumn = '1 / 4';
+        break;
+    }
+  
+    return baseStyles;
+  };
 
   return (
     <div>
@@ -37,24 +82,13 @@ function Home() {
           <p className={styles.subtitle}>Destination</p>
           <p style={{fontFamily: 'Work Sans', fontWeight: 'bold', fontSize: '40px', marginBottom: '3rem'}}>Top Attractions Destination</p>
           <div className={styles.grid}>
-                <figure className={styles.gridItem} style={{gridColumn: '1 / 4'}} >
-                  <TourDestination />
+            {destinations
+              .filter(destination => destination.id >= 1 && destination.id <= 6)
+              .map((destination, index) => (
+                <figure key={destination.id} className={styles.gridItem} style={getGridStyles(index)}>
+                  <TourDestination name={destination.name} />
                 </figure>
-                <figure className={styles.gridItem} style={{gridColumn: '4 / 7'}}>
-                  <TourDestination />
-                </figure>
-                <figure className={styles.gridItem} style={{gridColumn: '7 / 10'}}>
-                  <TourDestination />
-                </figure>
-                <figure className={styles.gridItem} style={{gridRow: '1 / 3', gridColumn: '10 / 13'}}>
-                  <TourDestination />
-                </figure>
-                <figure className={styles.gridItem} style={{gridColumn: '1 / 5'}} >
-                  <TourDestination />
-                </figure>
-                <figure className={styles.gridItem} style={{gridColumn: '5 / 10'}}>
-                  <TourDestination />
-                </figure>
+              ))}
           </div>
         </div>
         <div className={styles.experiences}>
