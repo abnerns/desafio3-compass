@@ -6,7 +6,7 @@ import categoryRoutes from './routes/categoriesRoutes';
 import { createCategoryTable } from './models/categoryModel';
 import { createReviewTable } from './models/reviewModel';
 import { createTourTable } from './models/tourModel';
-import { createAvgReviewTable } from './models/avgReviews';
+import { createAvgReviewTable } from './models/avgReviewsModel';
 import { createDestinationTable } from './models/destinationModel';
 
 const app: Application = express();

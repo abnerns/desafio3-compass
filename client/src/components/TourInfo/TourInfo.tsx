@@ -4,13 +4,13 @@ import { GrLocation } from "react-icons/gr"
 import styles from "./TourInfo.module.css"
 import { TiStarFullOutline } from "react-icons/ti"
 import AddReview from "../AddReview/AddReview"
-import { TourType } from "../Filters/types"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Map from "../Map/Map"
+import { TourTypes } from "../Tour/types"
 
 
-const TourInfo = ({ tour, reviews }: { tour: TourType }) => {
+const TourInfo = ({ tour, reviews }: { tour: TourTypes }) => {
   const { id: tourId } = useParams<{ id: string }>();
   const [avgRatings, setAvgRatings] = useState({
     services: 0,
@@ -43,7 +43,7 @@ const TourInfo = ({ tour, reviews }: { tour: TourType }) => {
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <GrLocation size={24} />
             <span style={{ display: 'flex', gap: '1rem' }}>
-              <p>{tour.city}, {tour.country}</p>
+              <p>{tour.city}, {tour.destinationName}</p>
               <p style={{ color: '#FC5056' }}>View on map</p>
             </span>
           </div>

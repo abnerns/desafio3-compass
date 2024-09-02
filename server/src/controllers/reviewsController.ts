@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { insertReview, deleteReview, updateReview, getCountByReview, getUserAvgRatings } from '../models/reviewModel';
-import { updateAvgReview } from '../models/avgReviews';
+import { updateAvgReview } from '../models/avgReviewsModel';
 import { Review } from '../types';
 
 export const addReview = (req: Request, res: Response) => {

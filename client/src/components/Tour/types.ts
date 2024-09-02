@@ -1,7 +1,6 @@
 export interface TourTypes {
     id: number;
     city: string;
-    country: string;
     name: string;
     review: string;
     price: number;
@@ -10,6 +9,8 @@ export interface TourTypes {
     avgReview: number;
     minAge: number;
     maxPeople: number;
+    destinationName: string;
+    categoryName: string;
 }
 
 export interface TourProps {
