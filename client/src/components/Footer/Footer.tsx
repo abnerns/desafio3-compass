@@ -19,8 +19,7 @@ const Footer = () => {
     <div className={styles.footer}>
         <div className={styles.box1}>
             <div className={styles.logo}>
-                <Plane />
-                <p>Trisog</p>
+                <a href="/"><img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/logo-white.png" alt="logo" style={{width: '110px'}} /></a>
             </div>
             <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
                 <p className={styles.cursive}>Need any help?</p>

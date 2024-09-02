@@ -78,10 +78,7 @@ const Header = () => {
         <Navbar expand="lg" className="bg-body-tertiary p-4" style={{ fontFamily: "Work Sans" }}>
         <Container style={{ display: "flex", gap: "2rem" }}>
             <div className={styles.logo}>
-            <GiCommercialAirplane size={30} />
-            <Navbar.Brand href="/" style={{ fontSize: "30px" }}>
-                Trisog
-            </Navbar.Brand>
+              <a href="/"><img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/logo-black.png" alt="logo" style={{width: '110px'}} /></a>
             </div>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">

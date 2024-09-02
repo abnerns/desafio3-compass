@@ -18,7 +18,7 @@ const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
             <p>
             {tour.city}, {tour.destinationName}
             </p>
-            <h3 style={{ width: "15vw", fontSize: "18px", fontWeight: "bold" }}>{tour.name}</h3>
+            <h3 style={{ width: "15.5vw", fontSize: "18px", fontWeight: "bold" }}>{tour.name}</h3>
             <div className={styles.bottom}>
             <div className={styles.review}>
                 <span className={styles.star}>
@@ -31,8 +31,8 @@ const Tour: React.FC<TourProps> = ({ tour, reviewCount }) => {
             </div>
             <span className={styles.hr} />
             <div className={styles.startPrice}>
-            <p>Starting from</p>
-            <p className={styles.price}>${tour.price}</p>
+              <p>Starting from</p>
+              <p className={styles.price}>${tour.price}</p>
             </div>
         </div>
     </div>

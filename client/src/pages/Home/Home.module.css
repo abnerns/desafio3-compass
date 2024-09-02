@@ -16,6 +16,8 @@
     font-family: 'Work Sans', sans-serif;
     height: 76vh;
     position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .homeHeader p{
