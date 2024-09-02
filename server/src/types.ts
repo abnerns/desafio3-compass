@@ -28,12 +28,17 @@ export interface Review {
     comfort: number;
   }
 
-  export interface Rating {
-    services: number | null;
-    price: number | null;
-    location: number | null;
-    food: number | null;
-    amenities: number | null;
-    comfort: number | null;
-  }
+export interface Rating {
+  services: number | null;
+  price: number | null;
+  location: number | null;
+  food: number | null;
+  amenities: number | null;
+  comfort: number | null;
+}
+
+export interface Destination {
+  id?: number;
+  name: string;
+}
   

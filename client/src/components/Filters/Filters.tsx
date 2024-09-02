@@ -4,11 +4,17 @@ import { Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { CiSearch } from "react-icons/ci";
 import NavButton from "../NavButton/NavButton";
-import { Categ } from "./types";
+import { Categ, Destination } from "./types";
 
 const Filters = ({ onCategoryChange, onReviewFilterChange }: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void }) => {
   const [priceFilter, setPriceFilter] = useState<number>(150);
   const [categories, setCategories] = useState<Categ[]>([]);
+  const [destinations, setDestinations] = useState<{ [key: string]: Destination[] }>({
+    Africa: [],
+    Americas: [],
+    Asia: [],
+    Europe: []
+  });
 
   const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter(Number(event.target.value));
@@ -18,6 +24,19 @@ const Filters = ({ onCategoryChange, onReviewFilterChange }: { onCategoryChange:
     fetch('http://localhost:8000/categories')
       .then((response) => response.json())
       .then((data) => setCategories(data))
+      .catch((error) => console.error("Erro ao buscar dados.", error));
+
+      fetch('http://localhost:8000/tours/destination')
+      .then((response) => response.json())
+      .then((data) => {
+        const continentMap: { [key: string]: Destination[] } = {
+          Africa: data.filter((dest: Destination) => dest.id >= 1 && dest.id <= 2),
+          Americas: data.filter((dest: Destination) => dest.id >= 3 && dest.id <= 6),
+          Asia: data.filter((dest: Destination) => dest.id >= 7 && dest.id <= 9),
+          Europe: data.filter((dest: Destination) => dest.id >= 10 && dest.id <= 13),
+        };
+        setDestinations(continentMap);
+      })
       .catch((error) => console.error("Erro ao buscar dados.", error));
   }, []);
 
@@ -74,39 +93,16 @@ const Filters = ({ onCategoryChange, onReviewFilterChange }: { onCategoryChange:
               </Container>
               <Container className={styles.container}>
                 <p className={styles.title}>Destinations</p>
-                <div>
-                  <p className={styles.subtitle}>Africa</p>
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Moroco" />
-                    <Form.Check type="checkbox" label="Tanzania" />
-                  </Form.Group>
-                </div>
-                <div>
-                <p className={styles.subtitle}>Americas</p>
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Argentina" />
-                    <Form.Check type="checkbox" label="Canada" />
-                    <Form.Check type="checkbox" label="Colombia" />
-                    <Form.Check type="checkbox" label="Costa Rica" />
-                  </Form.Group>
-                </div>
-                <div>
-                <p className={styles.subtitle}>Asia</p>
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Cambodia" />
-                    <Form.Check type="checkbox" label="Japan" />
-                    <Form.Check type="checkbox" label="Nepal" />
-                    <Form.Check type="checkbox" label="Thailand" />
-                    <Form.Check type="checkbox" label="Vietnam" />
-                  </Form.Group>
-                </div>
-                <div>
-                  <p className={styles.subtitle}>Europe</p>
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="France" />
-                      <Form.Check type="checkbox" label="Greece" />
+                {Object.entries(destinations).map(([continent, dests]) => (
+                  <div key={continent}>
+                    <p className={styles.subtitle}>{continent}</p>
+                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                      {dests.map((destination) => (
+                        <Form.Check type="checkbox" label={destination.name} key={destination.id} />
+                      ))}
                     </Form.Group>
-                </div>
+                  </div>
+                ))}
               </Container>
               <Container className={styles.container}>
                 <p className={styles.title}>Reviews</p>

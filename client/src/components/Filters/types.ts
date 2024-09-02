@@ -17,3 +17,9 @@ export interface TourType {
     maxPeople: number;
     categoryName: string;
 }
+
+export interface Destination {
+    id?: number;
+    name: string;
+}
+  
