@@ -17,6 +17,7 @@ const TourPackage = () => {
   const [offset, setOffset] = useState(0);
   const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [minAvgReview, setMinAvgReview] = useState<number | null>(null);
   const [totalTour, setTotalTour] = useState(0);
   const navigate = useNavigate();
 
@@ -27,8 +28,13 @@ const TourPackage = () => {
     const url = new URL("http://localhost:8000/tours");
     url.searchParams.append("limit", limit.toString());
     url.searchParams.append("offset", offset.toString());
+
     if (selectedCategory !== null) {
       url.searchParams.append("idCateg", selectedCategory.toString());
+    }
+
+    if (minAvgReview !== null) {
+      url.searchParams.append("minAvgReview", minAvgReview.toString());
     }
 
     fetch(url.toString())
@@ -56,7 +62,7 @@ const TourPackage = () => {
         setTotalTour(data.count);
       })
       .catch((error) => console.error("Erro ao buscar contagem total de tours:", error));
-  }, [limit, offset, selectedCategory]);
+  }, [limit, offset, selectedCategory, minAvgReview]);
 
   const handlePageClick = (pageNumber: number) => {
     setOffset((pageNumber - 1) * limit);
@@ -75,7 +81,7 @@ const TourPackage = () => {
           <SearchBar />
         </div>
         <div className={styles.main}>
-          <Filters onCategoryChange={setSelectedCategory} />
+          <Filters onCategoryChange={setSelectedCategory} onReviewFilterChange={setMinAvgReview} />
           <div className={styles.packages}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <p style={{ margin: "0" }}>{totalTour} Tours</p>

@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
-import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour, getTourById } from '../models/tourModel';
+import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour, getTourById, searchToursByReview } from '../models/tourModel';
 
 export const getTours = (req: Request, res: Response) => {
-  const { limit = 9, offset = 0, idCateg } = req.query;
+  const { limit = 9, offset = 0, idCateg, minAvgReview } = req.query;
 
-  if (idCateg) {
+  if (minAvgReview) {
+    searchToursByReview(parseFloat(minAvgReview as string), parseInt(limit as string), parseInt(offset as string), (result) => {
+      res.status(200).json(result);
+    });
+  } else if (idCateg) {
     searchToursByCategory(parseInt(idCateg as string), parseInt(limit as string), parseInt(offset as string), (result) => {
       res.status(200).json(result);
     });

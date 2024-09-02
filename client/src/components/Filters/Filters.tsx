@@ -6,7 +6,7 @@ import { CiSearch } from "react-icons/ci";
 import NavButton from "../NavButton/NavButton";
 import { Categ } from "./types";
 
-const Filters = ({ onCategoryChange }: { onCategoryChange: (id: number | null) => void }) => {
+const Filters = ({ onCategoryChange, onReviewFilterChange }: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void }) => {
   const [priceFilter, setPriceFilter] = useState<number>(150);
   const [categories, setCategories] = useState<Categ[]>([]);
 
@@ -23,6 +23,15 @@ const Filters = ({ onCategoryChange }: { onCategoryChange: (id: number | null) =
 
   const handleCategoryChange = (idCateg: number) => {
     onCategoryChange(idCateg);
+  };
+
+  const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    if (event.target.checked) {
+      onReviewFilterChange(value);
+    } else {
+      onReviewFilterChange(null);
+    }
   };
 
   return (
@@ -102,11 +111,11 @@ const Filters = ({ onCategoryChange }: { onCategoryChange: (id: number | null) =
               <Container className={styles.container}>
                 <p className={styles.title}>Reviews</p>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="5 Stars" />
-                  <Form.Check type="checkbox" label="4 Stars & Up" />
-                  <Form.Check type="checkbox" label="3 Stars & Up" />
-                  <Form.Check type="checkbox" label="2 Stars & Up" />
-                  <Form.Check type="checkbox" label="1 Stars & Up" />
+                  <Form.Check type="checkbox" label="5 Stars" value="5" onChange={handleReviewChange} />
+                  <Form.Check type="checkbox" label="4 Stars & Up" value="4" onChange={handleReviewChange} />
+                  <Form.Check type="checkbox" label="3 Stars & Up" value="3" onChange={handleReviewChange} />
+                  <Form.Check type="checkbox" label="2 Stars & Up" value="2" onChange={handleReviewChange} />
+                  <Form.Check type="checkbox" label="1 Stars & Up" value="1" onChange={handleReviewChange} />
                 </Form.Group>
               </Container>
             </div>
