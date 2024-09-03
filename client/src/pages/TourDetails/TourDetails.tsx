@@ -6,11 +6,11 @@ import TourInfo from "../../components/TourInfo/TourInfo"
 import styles from "./TourDetails.module.css"
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { TourType } from '../../components/Filters/types';
+import { TourTypes } from "../../components/Tour/types"
 
 const TourDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const [tour, setTour] = useState<TourType | null>(null);
+  const [tour, setTour] = useState<TourTypes | null>(null);
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {

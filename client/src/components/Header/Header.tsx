@@ -7,8 +7,9 @@ import { Container, Nav, Navbar, Form } from "react-bootstrap";
 import { Search, User } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { FaGoogle, FaLinkedin, FaPinterest, FaTwitter } from "react-icons/fa";
+import { HeaderProps } from "./types";
 
-const Header = ({ onSearchChange }: {onSearchChange: (name: string) => void}) => {
+const Header = ({ onSearchChange }: HeaderProps) => {
   const [userDetails, setUserDetails] = useState<UserInfo | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [search, setSearch] = useState<string>('');
