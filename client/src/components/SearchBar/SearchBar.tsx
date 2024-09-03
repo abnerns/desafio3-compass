@@ -4,9 +4,10 @@ import styles from "./SearchBar.module.css"
 import { useState } from "react"
 
 
-const SearchBar = ({onDestinationNameChange, onTypeChange}: {onDestinationNameChange: (name: string) => void, onTypeChange: (name: string) => void}) => {
+const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange}: {onDestinationNameChange: (name: string) => void, onTypeChange: (name: string) => void, onDateChange: (name: string) => void}) => {
   const [localDestinationName, setLocalDestinationName] = useState<string>("");
   const [searchType, setSearchType] = useState<string>('');
+  const [dateStart, setDateStart] = useState<string>('');
 
   const destinationInput= (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocalDestinationName(event.target.value);
@@ -24,9 +25,18 @@ const SearchBar = ({onDestinationNameChange, onTypeChange}: {onDestinationNameCh
     onTypeChange(searchType);
   };
 
+  const dateInput= (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDateStart(event.target.value);
+  };
+
+  const handleDate = () => {
+    onDateChange(dateStart);
+  };
+
   const handleSubmit = () => {
     handleDestination();
     handleType();
+    handleDate();
   }
 
   return (
@@ -49,6 +59,8 @@ const SearchBar = ({onDestinationNameChange, onTypeChange}: {onDestinationNameCh
         label="When"
         icon={<Calendar size={18} />}
         placeholder="Date"
+        value={dateStart}
+        onChange={dateInput}
       />
       <SearchBox 
         label="Guests"

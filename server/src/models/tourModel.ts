@@ -325,3 +325,4 @@ export const getTotalTour = (callback: (count: number) => void): void => {
     );
   };
   
+  
