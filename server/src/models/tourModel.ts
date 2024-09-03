@@ -48,30 +48,6 @@ export const searchTours = (limit: number, offset: number, callback: (res: Tour[
     }
   );
 };
-export const searchToursByCategory = (idCateg: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
-  db.all(
-    `SELECT 
-      tours.*, 
-      destination.name as destinationName,
-      COALESCE((
-        (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
-      ), 0) as avgReview
-    FROM tours
-    LEFT JOIN destination ON tours.idDestination = destination.id
-    LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
-    WHERE tours.idCateg = ?
-    GROUP BY tours.id
-    LIMIT ? OFFSET ?`,
-    [idCateg, limit, offset],
-    (err: Error | null, res: Tour[]) => {
-      if (err) {
-        console.error(err.message);
-      } else {
-        callback(res);
-      }
-    }
-  );
-};
 
 export const getCountByCategory = (callback: (res: Categ[]) => void): void => {
   db.all(
@@ -129,6 +105,32 @@ export const getTotalTour = (callback: (count: number) => void): void => {
       }
     );
   };
+
+  export const searchToursByCategory = (idCateg: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
+    db.all(
+      `SELECT 
+        tours.*, 
+        destination.name as destinationName,
+        COALESCE((
+          (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
+        ), 0) as avgReview
+      FROM tours
+      LEFT JOIN destination ON tours.idDestination = destination.id
+      LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
+      WHERE tours.idCateg = ?
+      GROUP BY tours.id
+      LIMIT ? OFFSET ?`,
+      [idCateg, limit, offset],
+      (err: Error | null, res: Tour[]) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          callback(res);
+        }
+      }
+    );
+  };
+  
   export const searchToursByReview = (minAvgReview: number, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
     db.all(
       `SELECT 
@@ -268,3 +270,58 @@ export const getTotalTour = (callback: (count: number) => void): void => {
       }
     );
   };
+
+  export const searchToursByType = (type: string, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
+    const typePattern = `%${type}%`;
+  
+    db.all(
+      `SELECT 
+        tours.*, 
+        destination.name as destinationName,
+        categories.name as categoryName,
+        COALESCE((
+          (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
+        ), 0) as avgReview
+      FROM tours
+      LEFT JOIN destination ON tours.idDestination = destination.id
+      LEFT JOIN categories ON tours.idCateg = categories.id
+      LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
+      WHERE categories.name LIKE ?
+      GROUP BY tours.id
+      LIMIT ? OFFSET ?`,
+      [typePattern, limit, offset],
+      (err: Error | null, res: Tour[]) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          callback(res);
+        }
+      }
+    );
+  };
+
+  export const searchToursByDate = (date: string, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
+    db.all(
+      `SELECT 
+        tours.*, 
+        destination.name as destinationName,
+        COALESCE((
+          (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
+        ), 0) as avgReview
+      FROM tours
+      LEFT JOIN destination ON tours.idDestination = destination.id
+      LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
+      WHERE DATE(tours.date_start) >= DATE(?)
+      GROUP BY tours.id
+      LIMIT ? OFFSET ?`,
+      [date, limit, offset],
+      (err: Error | null, res: Tour[]) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          callback(res);
+        }
+      }
+    );
+  };
+  

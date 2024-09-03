@@ -4,17 +4,30 @@ import styles from "./SearchBar.module.css"
 import { useState } from "react"
 
 
-const SearchBar = ({onDestinationNameChange}: {onDestinationNameChange: (name: string) => void }) => {
+const SearchBar = ({onDestinationNameChange, onTypeChange}: {onDestinationNameChange: (name: string) => void, onTypeChange: (name: string) => void}) => {
   const [localDestinationName, setLocalDestinationName] = useState<string>("");
+  const [searchType, setSearchType] = useState<string>('');
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const destinationInput= (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocalDestinationName(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleDestination = () => {
     onDestinationNameChange(localDestinationName);
   };
 
+  const typeInput= (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchType(event.target.value);
+  };
+
+  const handleType = () => {
+    onTypeChange(searchType);
+  };
+
+  const handleSubmit = () => {
+    handleDestination();
+    handleType();
+  }
 
   return (
     <div className={styles.container}>
@@ -23,12 +36,14 @@ const SearchBar = ({onDestinationNameChange}: {onDestinationNameChange: (name: s
           placeholder="Where to go?"
           icon={<Send size={18} />}
           value={localDestinationName} 
-          onChange={handleInputChange}
+          onChange={destinationInput}
       />
       <SearchBox 
         label="Type"
         icon={<Flag size={18} />}
         placeholder="Activity"
+        value={searchType}
+        onChange={typeInput}
       />
       <SearchBox 
         label="When"

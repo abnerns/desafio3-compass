@@ -25,6 +25,7 @@ const TourPackage = () => {
   const [searchName, setSearchName] = useState<string>('');
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [destinationName, setDestinationName] = useState<string>('');
+  const [type, setType] = useState<string>('');
 
   const currentPage = Math.floor(offset / limit) + 1;
   const totalPages = Math.ceil(totalTour / limit);
@@ -58,6 +59,10 @@ const TourPackage = () => {
       url.searchParams.append("destinationName", destinationName);
     }
 
+    if (type) {
+      url.searchParams.append("type", type);
+    }
+
 
     fetch(url.toString())
       .then((response) => response.json())
@@ -84,7 +89,7 @@ const TourPackage = () => {
         setTotalTour(data.count);
       })
       .catch((error) => console.error("Erro ao buscar contagem total de tours:", error));
-  }, [limit, offset, selectedCategory, minAvgReview, selectedDestination, minPrice, searchName, destinationName]);
+  }, [limit, offset, selectedCategory, minAvgReview, selectedDestination, minPrice, searchName, destinationName, type]);
 
   const handlePageClick = (pageNumber: number) => {
     setOffset((pageNumber - 1) * limit);
@@ -100,7 +105,7 @@ const TourPackage = () => {
             <p>Home /</p>
             <p style={{ color: "#FC5056" }}>Tour Package</p>
           </span>
-          <SearchBar onDestinationNameChange={setDestinationName} />
+          <SearchBar onDestinationNameChange={setDestinationName} onTypeChange={setType} />
         </div>
         <div className={styles.main}>
           <Filters onCategoryChange={setSelectedCategory} onReviewFilterChange={setMinAvgReview} onDestinationChange={setSelectedDestination} onPriceFilterChange={setMinPrice} onSearchChange={setSearchName} />
