@@ -5,11 +5,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { TourCount } from "./types";
+import { useNavigate } from "react-router-dom";
 
 const CarouselCategory = () => {
     const [categories, setCategories] = useState<TourCardTypes[]>([]);
     const [tourCounts, setCount] = useState<TourCount[]>([]);
     const [lowestPrices, setLowestPrices] = useState<{ idCateg: number; lowestPrice: number }[]>([]);
+    const navigate = useNavigate();
 
     const settings = {
       dots: true,
@@ -57,7 +59,9 @@ const CarouselCategory = () => {
     <div style={{width: '76.8vw'}}>
         <Slider {...settings}>
           {categories.map((category) => (
-            <TourCard key={category.id} category={category} tourCount={getCountByCategory(category.id)} lowestPrice={getLowestPrice(category.id)} />
+            <div onClick={() => navigate('/tours')}>
+              <TourCard key={category.id} category={category} tourCount={getCountByCategory(category.id)} lowestPrice={getLowestPrice(category.id)} />
+            </div>
           ))}
         </Slider>
     </div>
