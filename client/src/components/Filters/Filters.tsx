@@ -6,7 +6,7 @@ import { CiSearch } from "react-icons/ci";
 import NavButton from "../NavButton/NavButton";
 import { Categ, Destination } from "./types";
 
-const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, onPriceFilterChange }: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void, onDestinationChange: (id: number | null) => void, onPriceFilterChange : (minPrice: number | null) => void }) => {
+const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, onPriceFilterChange, onSearchChange}: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void, onDestinationChange: (id: number | null) => void, onPriceFilterChange : (minPrice: number | null) => void, onSearchChange: (name: string) => void }) => {
   const [priceFilter, setPriceFilter] = useState<number>(0);
   const [categories, setCategories] = useState<Categ[]>([]);
   const [destinations, setDestinations] = useState<{ [key: string]: Destination[] }>({
@@ -15,6 +15,7 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, 
     Asia: [],
     Europe: []
   });
+  const [searchText, setSearchText] = useState<string>("");
 
   const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter(Number(event.target.value));
@@ -69,13 +70,18 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, 
     onPriceFilterChange(priceFilter);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+    onSearchChange(event.target.value);
+  };
+
   return (
     <div className={styles.aside}>
               <Container className={styles.container}>
                 <p className={styles.title}>Search</p>
                 <Form className="d-flex align-items-center">
                     <div className={styles.input}>
-                      <input type="type" placeholder="Type anything..." style={{width: '10.5vw'}}></input>
+                      <input type="type" placeholder="Type anything..." style={{width: '10.5vw'}} onChange={handleSearchChange} />
                       <CiSearch size={26} />
                     </div>
                     

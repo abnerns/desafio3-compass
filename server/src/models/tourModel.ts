@@ -208,3 +208,30 @@ export const getTotalTour = (callback: (count: number) => void): void => {
       }
     );
   };
+
+  export const searchToursByName = (name: string, limit: number, offset: number, callback: (res: Tour[]) => void): void => {
+    const namePattern = `%${name}%`;
+  
+    db.all(
+      `SELECT 
+        tours.*, 
+        destination.name as destinationName,
+        COALESCE((
+          (AVG(avgReviews.services) + AVG(avgReviews.price) + AVG(avgReviews.location) + AVG(avgReviews.food) + AVG(avgReviews.amenities) + AVG(avgReviews.comfort)) / 6
+        ), 0) as avgReview
+      FROM tours
+      LEFT JOIN destination ON tours.idDestination = destination.id
+      LEFT JOIN avgReviews ON tours.id = avgReviews.idTour
+      WHERE tours.name LIKE ?
+      GROUP BY tours.id
+      LIMIT ? OFFSET ?`,
+      [namePattern, limit, offset],
+      (err: Error | null, res: Tour[]) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          callback(res);
+        }
+      }
+    );
+  };
