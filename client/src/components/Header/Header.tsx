@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 import { FaGoogle, FaLinkedin, FaPinterest, FaTwitter } from "react-icons/fa";
 import { HeaderProps } from "./types";
 
-const Header = ({ onSearchChange }: HeaderProps) => {
+const Header = ({ onSearchChange, onSearchClick }: HeaderProps) => {
   const [userDetails, setUserDetails] = useState<UserInfo | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [search, setSearch] = useState<string>('');
@@ -72,12 +72,23 @@ const Header = ({ onSearchChange }: HeaderProps) => {
     setSearchTrigger(true);
   }
 
+  const handleNavigation = () => {
+    if (onSearchClick) {
+      onSearchClick();
+    }
+  };
+
   useEffect(() => {
     if (searchTrigger) {
       setSearch('');
       setSearchTrigger(false);
     }
   }, [searchTrigger]);
+
+  const handleSearchClick = () => {
+    handleNavigation();
+    handleSearch();
+  }
 
   return (
     <div>
@@ -131,7 +142,7 @@ const Header = ({ onSearchChange }: HeaderProps) => {
                 <Form.Control type="search" onChange={searchInput} placeholder="Search" value={search} className="me-2" style={{borderColor: 'white', outline: 'none', boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}} />
             </Form>
             )}
-            <button onClick={handleSearch} style={{display: 'flex', alignSelf: 'center'}}><Search size={22} onClick={handleForm} className={styles.cursor} /></button>
+            <button onClick={handleSearchClick} style={{display: 'flex', alignSelf: 'center'}}><Search size={22} onClick={handleForm} className={styles.cursor} /></button>
             {userDetails ? (
             <div className={styles.userOn}>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.75rem", color: "#EB565A", fontWeight: "bold" }}>

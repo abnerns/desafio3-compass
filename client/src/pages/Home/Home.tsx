@@ -89,9 +89,14 @@ function Home() {
     navigate(`/tours?${searchParams.toString()}`);
   };
 
+  const handleSearchClick = () => {
+    navigate('/tours');
+  };
+
+
   return (
     <div>
-      <Header />
+      <Header onSearchClick={handleSearchClick} />
       <div className={styles.body}>
         <div className={styles.homeHeader}>
           <p style={{fontFamily: 'Kaushan Script', fontSize: '32px', color: '#FC5056'}}>Save 15% off in Worldwide</p>

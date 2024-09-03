@@ -5,13 +5,14 @@ import Header from "../../components/Header/Header"
 import TourInfo from "../../components/TourInfo/TourInfo"
 import styles from "./TourDetails.module.css"
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { TourTypes } from "../../components/Tour/types"
 
 const TourDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [tour, setTour] = useState<TourTypes | null>(null);
   const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:8000/tours/${id}`)
@@ -27,9 +28,13 @@ const TourDetails = () => {
 
   if (!tour) return <p>Carregando...</p>;
 
+  const handleSearchClick = () => {
+    navigate('/tours');
+  };
+
   return (
     <div>
-      <Header />
+      <Header onSearchClick={handleSearchClick} />
         <div className={styles.body}>
           <div className={styles.main}>
             <img src="https://3challenge-compass.s3.us-east-2.amazonaws.com/vernazza.jpg" alt="static-tour" style={{width: '100%'}} />
