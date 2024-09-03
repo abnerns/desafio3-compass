@@ -29,12 +29,20 @@ const AverageReview = () => {
 
   const globalAverage = ((avgRatings.services + avgRatings.price + avgRatings.location + avgRatings.food + avgRatings.amenities + avgRatings.comfort) / 6).toFixed(1);
 
+  const getDescription = (average: number) => {
+    if (average >= 1.0 && average < 2.0) return "Poor";
+    if (average >= 2.0 && average < 3.0) return "Average";
+    if (average >= 3.0 && average < 4.0) return "Good";
+    if (average >= 4.0) return "Excellent";
+    return "No Rating";
+  };
+
   return (
     <div>
         <div className={styles.container}>
             <div className={styles.avgBox}>
                 <p style={{fontWeight: 'bold', fontSize: '56px', margin: '0'}}>{globalAverage}</p>
-                <span style={{display: 'flex', alignItems: 'center', gap: '0.4rem'}}><FaStar color="white" /><p style={{margin: '0'}}>Excellent</p></span>
+                <span style={{display: 'flex', alignItems: 'center', gap: '0.4rem'}}><FaStar color="white" /><p style={{margin: '0'}}>{getDescription(Number(globalAverage))}</p></span>
             </div>
             <div className={styles.reviewBox}>
                 <div><p>Services</p><span><ProgressBar variant="danger" now={60} style={{width: '202px', height: '8px'}} /><p>{avgRatings.services.toFixed(1)}</p></span></div>
