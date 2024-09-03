@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour, getTourById, searchToursByReview, searchToursByDestination, searchToursByPrice, searchToursByName, searchToursByDestinationName, searchToursByType, searchToursByDate } from '../models/tourModel';
+import { searchTours, searchToursByCategory, getCountByCategory, getLowestPrice, getTotalTour, getTourById, searchToursByReview, searchToursByDestination, searchToursByPrice, searchToursByName, searchToursByDestinationName, searchToursByType, searchToursByDate, searchToursByMaxPeople } from '../models/tourModel';
 import { searchDestinations } from '../models/destinationModel';
 
 export const getTours = (req: Request, res: Response) => {
-  const { limit = 9, offset = 0, idCateg, minAvgReview, idDestination, minPrice, name, destinationName, type, dateStart } = req.query;
+  const { limit = 9, offset = 0, idCateg, minAvgReview, idDestination, minPrice, name, destinationName, type, dateStart, maxPeople } = req.query;
 
   if (name) {
     searchToursByName(name as string, parseInt(limit as string), parseInt(offset as string), (result) => {
@@ -35,6 +35,10 @@ export const getTours = (req: Request, res: Response) => {
     });
   } else if (dateStart) {
     searchToursByDate(dateStart as string, parseInt(limit as string), parseInt(offset as string), (result) => {
+      res.status(200).json(result);
+    });
+  } else if (maxPeople) {
+    searchToursByMaxPeople(parseInt(maxPeople as string), parseInt(limit as string), parseInt(offset as string), (result) => {
       res.status(200).json(result);
     });
   } else {

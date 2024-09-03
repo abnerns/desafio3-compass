@@ -4,10 +4,11 @@ import styles from "./SearchBar.module.css"
 import { useState } from "react"
 
 
-const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange}: {onDestinationNameChange: (name: string) => void, onTypeChange: (name: string) => void, onDateChange: (name: string) => void}) => {
+const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange, onPeopleChange}: {onDestinationNameChange: (name: string) => void, onTypeChange: (name: string) => void, onDateChange: (name: string) => void, onPeopleChange: (maxPeople: number | null) => void}) => {
   const [localDestinationName, setLocalDestinationName] = useState<string>("");
   const [searchType, setSearchType] = useState<string>('');
   const [dateStart, setDateStart] = useState<string>('');
+  const [maxPeople, setMaxPeople] = useState<number>(0);
 
   const destinationInput= (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocalDestinationName(event.target.value);
@@ -33,10 +34,19 @@ const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange}: {onDes
     onDateChange(dateStart);
   };
 
+  const peopleInput= (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMaxPeople(Number(event.target.value));
+  };
+
+  const handlePeople = () => {
+    onPeopleChange(maxPeople);
+  };
+
   const handleSubmit = () => {
     handleDestination();
     handleType();
     handleDate();
+    handlePeople();
   }
 
   return (
@@ -66,6 +76,8 @@ const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange}: {onDes
         label="Guests"
         icon={<Users size={18} />}
         placeholder="0"
+        value={maxPeople}
+        onChange={peopleInput}
       />
       <button className={styles.btn} onClick={handleSubmit}>Submit</button>
     </div>

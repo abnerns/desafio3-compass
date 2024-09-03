@@ -3,7 +3,6 @@ import styles from "./Filters.module.css"
 import { Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { CiSearch } from "react-icons/ci";
-import NavButton from "../NavButton/NavButton";
 import { Categ, Destination } from "./types";
 
 const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, onPriceFilterChange, onSearchChange}: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void, onDestinationChange: (id: number | null) => void, onPriceFilterChange : (minPrice: number | null) => void, onSearchChange: (name: string) => void }) => {
