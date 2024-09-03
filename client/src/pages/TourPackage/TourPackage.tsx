@@ -1,4 +1,4 @@
-import { FaSortAlphaDown } from "react-icons/fa";
+import { FaSortAlphaDown, FaSortAlphaUp } from "react-icons/fa";
 import Filters from "../../components/Filters/Filters";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -7,12 +7,12 @@ import styles from "./TourPackage.module.css";
 import { Form } from "react-bootstrap";
 import { FaAngleDown, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import { TourType } from "../../components/Filters/types";
 import Tour from "../../components/Tour/Tour";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { TourTypes } from "../../components/Tour/types";
 
 const TourPackage = () => {
-  const [tours, setTours] = useState<TourType[]>([]);
+  const [tours, setTours] = useState<TourTypes[]>([]);
   const [limit] = useState(9);
   const [offset, setOffset] = useState(0);
   const [totalTour, setTotalTour] = useState(0);
@@ -29,6 +29,7 @@ const TourPackage = () => {
   const [type, setType] = useState<string>('');
   const [dateStart, setDateStart] = useState<string>('');
   const [maxPeople, setMaxPeople] = useState<number | null>(null);
+  const [sortOrder, setSortOrder] = useState('ASC');
 
   const currentPage = Math.floor(offset / limit) + 1;
   const totalPages = Math.ceil(totalTour / limit);
@@ -88,6 +89,10 @@ const TourPackage = () => {
       url.searchParams.append("maxPeople", maxPeople.toString());
     }
 
+    if (sortOrder) {
+      url.searchParams.append("sortOrder", sortOrder.toString());
+    }
+
 
     fetch(url.toString())
       .then((response) => response.json())
@@ -116,7 +121,7 @@ const TourPackage = () => {
       })
       .catch((error) => console.error("Erro ao buscar contagem total de tours:", error));
       
-  }, [limit, offset, selectedCategory, minAvgReview, selectedDestination, minPrice, searchName, destinationName, type, dateStart, maxPeople]);
+  }, [limit, offset, selectedCategory, minAvgReview, selectedDestination, minPrice, searchName, destinationName, type, dateStart, maxPeople, sortOrder]);
 
   const handlePageClick = (pageNumber: number) => {
     setOffset((pageNumber - 1) * limit);
@@ -124,6 +129,10 @@ const TourPackage = () => {
 
   const handleSearchChange = (value: string) => {
     setSearchName(value);
+  };
+
+  const handleSort = () => {
+    setSortOrder((prevOrder) => (prevOrder === 'ASC' ? 'DESC' : 'ASC'));
   };
 
   return (
@@ -153,7 +162,11 @@ const TourPackage = () => {
               <p style={{ margin: "0" }}>{totalTour} Tours</p>
               <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", opacity: "0.7" }}>
                 <p style={{ margin: "0" }}>Sort by</p>
-                <FaSortAlphaDown size={22} />
+                {sortOrder === 'ASC' ? (
+                  <FaSortAlphaDown size={22} onClick={handleSort} style={{cursor: 'pointer'}} />
+                ) : (
+                  <FaSortAlphaUp size={22} onClick={handleSort} style={{cursor: 'pointer'}} />
+                )}
                 <Form className="d-flex align-items-center">
                   <div className={styles.input}>
                     <input type="title" placeholder="Title" style={{ backgroundColor: "#F7F8FA" }}></input>
