@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 const TourPackage = () => {
   const [tours, setTours] = useState<TourType[]>([]);
-  const [limit] = useState(3);
+  const [limit] = useState(9);
   const [offset, setOffset] = useState(0);
   const [totalTour, setTotalTour] = useState(0);
   const navigate = useNavigate();
@@ -136,7 +136,7 @@ const TourPackage = () => {
             <div className={styles.content}>
               {tours.map((tour) => (
                 <div key={tour.id} onClick={() => navigate(`/tour-details/${tour.id}`)}>
-                  <Tour  tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
+                  <Tour tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
                 </div>
               ))}
             </div>
