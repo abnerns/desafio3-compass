@@ -18,12 +18,6 @@ const TourPackage = () => {
   const [totalTour, setTotalTour] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const [filters, setFilters] = useState({
-    destinationName: '',
-    type: '',
-    date: '',
-    people: 0,
-  });
 
   const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -41,12 +35,12 @@ const TourPackage = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const destination = params.get("destinationName") || "";
+    const destinationName = params.get("destinationName") || "";
     const type = params.get("type") || "";
     const date = params.get("date") || "";
     const people = parseInt(params.get("people") || "0", 10);
 
-    setDestinationName(destination);
+    setDestinationName(destinationName);
     setType(type);
     setDateStart(date);
     setMaxPeople(people);
@@ -121,15 +115,20 @@ const TourPackage = () => {
         setTotalTour(data.count);
       })
       .catch((error) => console.error("Erro ao buscar contagem total de tours:", error));
+      
   }, [limit, offset, selectedCategory, minAvgReview, selectedDestination, minPrice, searchName, destinationName, type, dateStart, maxPeople]);
 
   const handlePageClick = (pageNumber: number) => {
     setOffset((pageNumber - 1) * limit);
   };
 
+  const handleSearchChange = (value: string) => {
+    setSearchName(value);
+  };
+
   return (
     <div>
-      <Header />
+      <Header onSearchChange={handleSearchChange} />
       <div className={styles.body}>
         <div className={styles.homeHeader}>
           <p style={{fontFamily: "Work Sans",fontWeight: "bold",fontSize: "56px", margin: "0",}}>Tour Package</p>

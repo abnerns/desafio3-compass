@@ -15,10 +15,6 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, 
     Europe: []
   });
 
-  const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPriceFilter(Number(event.target.value));
-  };
-
   useEffect(() => {
     fetch('http://localhost:8000/categories')
       .then((response) => response.json())
@@ -62,6 +58,10 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, 
     } else {
       onDestinationChange(null);
     }
+  };
+
+  const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceFilter(Number(event.target.value));
   };
 
   const handlePriceChange = () => {

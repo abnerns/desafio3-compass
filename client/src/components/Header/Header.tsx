@@ -4,14 +4,15 @@ import { doc, getDoc } from "firebase/firestore";
 import { UserInfo } from "../../types/User";
 import styles from "./Header.module.css";
 import { Container, Nav, Navbar, Form } from "react-bootstrap";
-import { GiCommercialAirplane } from "react-icons/gi";
 import { Search, User } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { FaGoogle, FaLinkedin, FaPinterest, FaTwitter } from "react-icons/fa";
 
-const Header = () => {
+const Header = ({ onSearchChange }: {onSearchChange: (name: string) => void}) => {
   const [userDetails, setUserDetails] = useState<UserInfo | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [search, setSearch] = useState<string>('');
+  const [searchTrigger, setSearchTrigger] = useState(false);
   const location = useLocation();
 
   const fetchUserData = async () => {
@@ -60,6 +61,22 @@ const Header = () => {
   const handleForm = () => {
     setShowForm((prevShowSearchForm) => !prevShowSearchForm); 
   };
+
+  const searchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  const handleSearch = () => {
+    onSearchChange(search);
+    setSearchTrigger(true);
+  }
+
+  useEffect(() => {
+    if (searchTrigger) {
+      setSearch('');
+      setSearchTrigger(false);
+    }
+  }, [searchTrigger]);
 
   return (
     <div>
@@ -110,10 +127,10 @@ const Header = () => {
         <div className={styles.userNav}>
             {showForm && (
             <Form className={"d-flex"}>
-                <Form.Control type="search" placeholder="Search" className="me-2" style={{borderColor: 'white', outline: 'none', boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}} />
+                <Form.Control type="search" onChange={searchInput} placeholder="Search" value={search} className="me-2" style={{borderColor: 'white', outline: 'none', boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}} />
             </Form>
             )}
-            <Search size={22} onClick={handleForm} className={styles.cursor} />
+            <button onClick={handleSearch} style={{display: 'flex', alignSelf: 'center'}}><Search size={22} onClick={handleForm} className={styles.cursor} /></button>
             {userDetails ? (
             <div className={styles.userOn}>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.75rem", color: "#EB565A", fontWeight: "bold" }}>
