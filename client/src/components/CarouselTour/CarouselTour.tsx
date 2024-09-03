@@ -46,7 +46,7 @@ const CarouselTour = () => {
     <div style={{width: '76.8vw'}}> 
       <Slider {...settings}>
       {tours.map((tour) => (
-        <div key={tour.id} onClick={() => navigate(`/tour-details/${tour.id}`)}>
+        <div key={tour.id} onClick={() => {navigate(`/tour-details/${tour.id}`); window.scrollTo(0, 200);}}>
           <Tour  tour={tour} reviewCount={reviewCounts[tour.id] || 0} />
         </div>
       ))}

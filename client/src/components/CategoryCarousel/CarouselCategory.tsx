@@ -59,7 +59,10 @@ const CarouselCategory = () => {
     <div style={{width: '76.8vw'}}>
         <Slider {...settings}>
           {categories.map((category) => (
-            <div onClick={() => navigate('/tours')}>
+            <div onClick={() => {
+              navigate('/tours');
+              window.scrollTo(0, 0);
+            }}>
               <TourCard key={category.id} category={category} tourCount={getCountByCategory(category.id)} lowestPrice={getLowestPrice(category.id)} />
             </div>
           ))}

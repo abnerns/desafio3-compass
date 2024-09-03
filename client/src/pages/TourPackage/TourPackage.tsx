@@ -79,6 +79,7 @@ const TourPackage = () => {
       .then((data) => {
         console.log("Dados recebidos do servidor.", data);
         setTours(data);
+        window.scrollTo(0, 500);
       })
       .catch((error) => console.error("Erro ao buscar dados.", error));
 
