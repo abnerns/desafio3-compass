@@ -15,7 +15,6 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, 
     Asia: [],
     Europe: []
   });
-  const [searchText, setSearchText] = useState<string>("");
 
   const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPriceFilter(Number(event.target.value));
@@ -71,7 +70,6 @@ const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, 
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
     onSearchChange(event.target.value);
   };
 
