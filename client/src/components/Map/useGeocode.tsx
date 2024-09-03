@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useGeocode = (city: string, country: string) => {
+const useGeocode = (city: string) => {
   const [coordinates, setCoordinates] = useState<[number, number] | null>(null);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const useGeocode = (city: string, country: string) => {
     };
 
     fetchCoordinates();
-  }, [city, country]);
+  }, [city]);
 
   return coordinates;
 };

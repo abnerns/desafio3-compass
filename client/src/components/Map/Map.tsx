@@ -2,8 +2,8 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import useGeocode from './useGeocode';
 
-const Map = ({ city, country }: { city: string, country: string }) => {
-  const coordinates = useGeocode(city, country);
+const Map = ({ city }: { city: string }) => {
+  const coordinates = useGeocode(city);
 
   if (!coordinates) {
     return <p>Loading map...</p>;

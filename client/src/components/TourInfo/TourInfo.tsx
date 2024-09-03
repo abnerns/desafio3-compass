@@ -8,9 +8,10 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Map from "../Map/Map"
 import { TourTypes } from "../Tour/types"
+import { ReviewProps } from "../AddReview/types"
 
 
-const TourInfo = ({ tour, reviews }: { tour: TourTypes }) => {
+const TourInfo = ({ tour, reviews }: { tour: TourTypes, reviews: ReviewProps[] }) => {
   const { id: tourId } = useParams<{ id: string }>();
   const [avgRatings, setAvgRatings] = useState({
     services: 0,
@@ -86,7 +87,7 @@ const TourInfo = ({ tour, reviews }: { tour: TourTypes }) => {
         </div>
         <div>
             <p className={styles.title}>Map</p>
-            <Map city={tour.city} country={tour.country} />
+            <Map city={tour.city} />
         </div>
         <div>
             <p className={styles.title}>Average Reviews</p>
