@@ -10,6 +10,7 @@ export interface ReviewTypes {
     amenities: number;
     comfort: number;
     created_at: string;
+    idTour: number;
 }
 
 export interface ReviewProps {
