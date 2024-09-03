@@ -3,9 +3,9 @@ import styles from "./Filters.module.css"
 import { Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { CiSearch } from "react-icons/ci";
-import { Categ, Destination } from "./types";
+import { Categ, Destination, FiltersProps } from "./types";
 
-const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, onPriceFilterChange, onSearchChange}: { onCategoryChange: (id: number | null) => void, onReviewFilterChange: (minAvgReview: number | null) => void, onDestinationChange: (id: number | null) => void, onPriceFilterChange : (minPrice: number | null) => void, onSearchChange: (name: string) => void }) => {
+const Filters = ({ onCategoryChange, onReviewFilterChange, onDestinationChange, onPriceFilterChange, onSearchChange}: FiltersProps) => {
   const [priceFilter, setPriceFilter] = useState<number>(0);
   const [categories, setCategories] = useState<Categ[]>([]);
   const [destinations, setDestinations] = useState<{ [key: string]: Destination[] }>({

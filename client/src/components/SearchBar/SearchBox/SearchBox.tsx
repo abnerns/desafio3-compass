@@ -1,5 +1,5 @@
 import styles from "./SearchBox.module.css"
-import { SearchBoxProps } from "./types"
+import { SearchBoxProps } from "../types"
 
 const SearchBox = (props: SearchBoxProps) => {
   return (

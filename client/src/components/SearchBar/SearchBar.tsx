@@ -2,9 +2,10 @@ import { Calendar, Flag, Send, Users } from "lucide-react"
 import SearchBox from "./SearchBox/SearchBox"
 import styles from "./SearchBar.module.css"
 import { useState } from "react"
+import { SearchBarProps } from "./types"
 
 
-const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange, onPeopleChange}: {onDestinationNameChange: (name: string) => void, onTypeChange: (name: string) => void, onDateChange: (name: string) => void, onPeopleChange: (maxPeople: number | null) => void}) => {
+const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange, onPeopleChange}: SearchBarProps) => {
   const [localDestinationName, setLocalDestinationName] = useState<string>("");
   const [searchType, setSearchType] = useState<string>('');
   const [dateStart, setDateStart] = useState<string>('');
