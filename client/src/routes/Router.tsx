@@ -9,6 +9,7 @@ import { auth } from "../firebase/firebase";
 import { User } from "firebase/auth";
 import { ProtectedRoute } from "./ProtectedRoute";
 import TourDetails from "../pages/TourDetails/TourDetails";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 function Router() {
   const [user, setUser] = useState<User | null>(null);
@@ -39,6 +40,7 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login user={user} />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/error" element={<ErrorPage />} />
         <Route
           path="/tours"
           element={
