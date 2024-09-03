@@ -81,7 +81,7 @@ const SearchBar = ({initialDestination = "", initialType = "", initialDate = "",
       <SearchBox 
         label="When"
         icon={<Calendar size={18} />}
-        placeholder="Date"
+        placeholder="Date (YYYY-MM-DD)"
         value={dateStart}
         onChange={dateInput}
       />
