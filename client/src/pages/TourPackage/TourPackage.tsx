@@ -15,14 +15,16 @@ const TourPackage = () => {
   const [tours, setTours] = useState<TourType[]>([]);
   const [limit] = useState(3);
   const [offset, setOffset] = useState(0);
+  const [totalTour, setTotalTour] = useState(0);
+  const navigate = useNavigate();
+
   const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [minAvgReview, setMinAvgReview] = useState<number | null>(null);
   const [selectedDestination, setSelectedDestination] = useState<number | null>(null);
   const [searchName, setSearchName] = useState<string>('');
   const [minPrice, setMinPrice] = useState<number | null>(null);
-  const [totalTour, setTotalTour] = useState(0);
-  const navigate = useNavigate();
+  const [destinationName, setDestinationName] = useState<string>('');
 
   const currentPage = Math.floor(offset / limit) + 1;
   const totalPages = Math.ceil(totalTour / limit);
@@ -52,6 +54,10 @@ const TourPackage = () => {
       url.searchParams.append("name", searchName);
     }
 
+    if (destinationName) {
+      url.searchParams.append("destinationName", destinationName);
+    }
+
 
     fetch(url.toString())
       .then((response) => response.json())
@@ -78,7 +84,7 @@ const TourPackage = () => {
         setTotalTour(data.count);
       })
       .catch((error) => console.error("Erro ao buscar contagem total de tours:", error));
-  }, [limit, offset, selectedCategory, minAvgReview, selectedDestination, minPrice, searchName]);
+  }, [limit, offset, selectedCategory, minAvgReview, selectedDestination, minPrice, searchName, destinationName]);
 
   const handlePageClick = (pageNumber: number) => {
     setOffset((pageNumber - 1) * limit);
@@ -94,7 +100,7 @@ const TourPackage = () => {
             <p>Home /</p>
             <p style={{ color: "#FC5056" }}>Tour Package</p>
           </span>
-          <SearchBar />
+          <SearchBar onDestinationNameChange={setDestinationName} />
         </div>
         <div className={styles.main}>
           <Filters onCategoryChange={setSelectedCategory} onReviewFilterChange={setMinAvgReview} onDestinationChange={setSelectedDestination} onPriceFilterChange={setMinPrice} onSearchChange={setSearchName} />

@@ -10,6 +10,8 @@ const SearchBox = (props: SearchBoxProps) => {
           <input
             placeholder={props.placeholder}
             className={styles.input}
+            value={props.value}
+            onChange={props.onChange} 
           />     
         </div>
         

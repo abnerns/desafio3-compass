@@ -1,16 +1,29 @@
 import { Calendar, Flag, Send, Users } from "lucide-react"
-import NavButton from "../NavButton/NavButton"
 import SearchBox from "./SearchBox/SearchBox"
 import styles from "./SearchBar.module.css"
+import { useState } from "react"
 
 
-const SearchBar = () => {
+const SearchBar = ({onDestinationNameChange}: {onDestinationNameChange: (name: string) => void }) => {
+  const [localDestinationName, setLocalDestinationName] = useState<string>("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalDestinationName(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    onDestinationNameChange(localDestinationName);
+  };
+
+
   return (
     <div className={styles.container}>
         <SearchBox 
-        label="Destination"
-        icon={<Send size={18} />}
-        placeholder="Where to go?"
+          label="Destination"
+          placeholder="Where to go?"
+          icon={<Send size={18} />}
+          value={localDestinationName} 
+          onChange={handleInputChange}
       />
       <SearchBox 
         label="Type"
@@ -27,9 +40,7 @@ const SearchBar = () => {
         icon={<Users size={18} />}
         placeholder="0"
       />
-      <NavButton
-        value="Search"
-      />
+      <button className={styles.btn} onClick={handleSubmit}>Submit</button>
     </div>
   )
 }
