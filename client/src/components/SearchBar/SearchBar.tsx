@@ -1,15 +1,24 @@
 import { Calendar, Flag, Send, Users } from "lucide-react"
 import SearchBox from "./SearchBox/SearchBox"
 import styles from "./SearchBar.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SearchBarProps } from "./types"
 
 
-const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange, onPeopleChange}: SearchBarProps) => {
-  const [localDestinationName, setLocalDestinationName] = useState<string>("");
-  const [searchType, setSearchType] = useState<string>('');
-  const [dateStart, setDateStart] = useState<string>('');
-  const [maxPeople, setMaxPeople] = useState<number>(0);
+const SearchBar = ({initialDestination = "", initialType = "", initialDate = "", initialPeople = 0, onDestinationNameChange, onTypeChange, onDateChange, onPeopleChange, onSearchSubmit}: SearchBarProps) => {
+  const [localDestinationName, setLocalDestinationName] = useState<string>(initialDestination);
+  const [searchType, setSearchType] = useState<string>(initialType);
+  const [dateStart, setDateStart] = useState<string>(initialDate);
+  const [maxPeople, setMaxPeople] = useState<number | null>(initialPeople);
+
+  useEffect(() => {
+    if (initialDestination || initialType || initialDate || initialPeople !== 0 ? initialPeople : null) {
+      setLocalDestinationName("");
+      setSearchType("");
+      setDateStart("");
+      setMaxPeople(null);
+    }
+  }, [initialDestination, initialType, initialDate, initialPeople]);
 
   const destinationInput= (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocalDestinationName(event.target.value);
@@ -40,7 +49,9 @@ const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange, onPeopl
   };
 
   const handlePeople = () => {
-    onPeopleChange(maxPeople);
+    if (maxPeople !== null) {
+      onPeopleChange(maxPeople);
+    }
   };
 
   const handleSubmit = () => {
@@ -48,16 +59,17 @@ const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange, onPeopl
     handleType();
     handleDate();
     handlePeople();
+    onSearchSubmit(localDestinationName, searchType, dateStart, maxPeople);
   }
 
   return (
     <div className={styles.container}>
-        <SearchBox 
-          label="Destination"
-          placeholder="Where to go?"
-          icon={<Send size={18} />}
-          value={localDestinationName} 
-          onChange={destinationInput}
+      <SearchBox 
+        label="Destination"
+        placeholder="Where to go?"
+        icon={<Send size={18} />}
+        value={localDestinationName} 
+        onChange={destinationInput}
       />
       <SearchBox 
         label="Type"
@@ -77,7 +89,7 @@ const SearchBar = ({onDestinationNameChange, onTypeChange, onDateChange, onPeopl
         label="Guests"
         icon={<Users size={18} />}
         placeholder="0"
-        value={maxPeople}
+        value={maxPeople !== null ? maxPeople.toString() : ""}
         onChange={peopleInput}
       />
       <button className={styles.btn} onClick={handleSubmit}>Submit</button>

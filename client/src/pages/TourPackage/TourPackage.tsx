@@ -9,7 +9,7 @@ import { FaAngleDown, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { TourType } from "../../components/Filters/types";
 import Tour from "../../components/Tour/Tour";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const TourPackage = () => {
   const [tours, setTours] = useState<TourType[]>([]);
@@ -17,6 +17,13 @@ const TourPackage = () => {
   const [offset, setOffset] = useState(0);
   const [totalTour, setTotalTour] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [filters, setFilters] = useState({
+    destinationName: '',
+    type: '',
+    date: '',
+    people: 0,
+  });
 
   const [reviewCounts, setReviewCounts] = useState<{ [key: number]: number }>({});
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -31,6 +38,20 @@ const TourPackage = () => {
 
   const currentPage = Math.floor(offset / limit) + 1;
   const totalPages = Math.ceil(totalTour / limit);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const destination = params.get("destinationName") || "";
+    const type = params.get("type") || "";
+    const date = params.get("date") || "";
+    const people = parseInt(params.get("people") || "0", 10);
+
+    setDestinationName(destination);
+    setType(type);
+    setDateStart(date);
+    setMaxPeople(people);
+    
+  }, [location.search]);
 
   useEffect(() => {
     const url = new URL("http://localhost:8000/tours");
@@ -116,7 +137,15 @@ const TourPackage = () => {
             <p>Home /</p>
             <p style={{ color: "#FC5056" }}>Tour Package</p>
           </span>
-          <SearchBar onDestinationNameChange={setDestinationName} onTypeChange={setType} onDateChange={setDateStart} onPeopleChange={setMaxPeople} />
+          <SearchBar 
+            initialDestination={destinationName}
+            initialType={type}
+            initialDate={dateStart}
+            initialPeople={maxPeople}
+            onDestinationNameChange={setDestinationName} 
+            onTypeChange={setType} 
+            onDateChange={setDateStart} 
+            onPeopleChange={setMaxPeople} />
         </div>
         <div className={styles.main}>
           <Filters onCategoryChange={setSelectedCategory} onReviewFilterChange={setMinAvgReview} onDestinationChange={setSelectedDestination} onPriceFilterChange={setMinPrice} onSearchChange={setSearchName} />

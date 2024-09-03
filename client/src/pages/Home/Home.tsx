@@ -9,6 +9,7 @@ import { RiDoubleQuotesR } from "react-icons/ri";
 import { VscPlayCircle } from "react-icons/vsc";
 import TourDestination from "../../components/TourDestination/TourDestination";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Destination {
   id: number;
@@ -17,6 +18,11 @@ interface Destination {
 
 function Home() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [localDestinationName, setLocalDestinationName] = useState<string>('');
+  const [searchType, setSearchType] = useState<string>('');
+  const [dateStart, setDateStart] = useState<string>('');
+  const [maxPeople, setMaxPeople] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8000/tours/destination")
@@ -56,6 +62,33 @@ function Home() {
     return baseStyles;
   };
 
+  const handleDestinationNameChange = () => {
+    setLocalDestinationName(localDestinationName);
+  };
+
+  const handleTypeChange = () => {
+    setSearchType(searchType);
+  };
+
+  const handleDateChange = () => {
+    setDateStart(dateStart);
+  };
+
+  const handlePeopleChange = () => {
+    setMaxPeople(maxPeople);
+  };
+
+  const handleSearchSubmit = (destinationName: string, type: string, date: string, people: number) => {
+    const searchParams = new URLSearchParams({
+      destinationName,
+      type,
+      date,
+      people: people.toString(),
+    });
+    
+    navigate(`/tours?${searchParams.toString()}`);
+  };
+
   return (
     <div>
       <Header />
@@ -64,7 +97,13 @@ function Home() {
           <p style={{fontFamily: 'Kaushan Script', fontSize: '32px', color: '#FC5056'}}>Save 15% off in Worldwide</p>
           <p style={{fontFamily: 'Work Sans', fontWeight: 'bold', fontSize: '56px'}}>Travel & Adventures</p>
           <p style={{fontWeight: '500'}}>Find awesome hotel, tour, car and activities in London</p>
-          <SearchBar />
+          <SearchBar 
+            onDestinationNameChange={handleDestinationNameChange} 
+            onTypeChange={handleTypeChange} 
+            onDateChange={handleDateChange} 
+            onPeopleChange={handlePeopleChange} 
+            onSearchSubmit={handleSearchSubmit}  
+          />
         </div>
         <div style={{display: 'flex', alignItems: 'center', flexFlow: 'column', marginTop: '5rem'}}>
           <p className={styles.subtitle}>Tours</p>
